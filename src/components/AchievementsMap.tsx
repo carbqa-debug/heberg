@@ -77,13 +77,13 @@ export default function AchievementsMap() {
   const L = lang === 'ar'
     ? {
         eyebrow: 'حضور عالمي',
-        title: 'معترف بها خارج حدود تونس.',
+        title: 'معترف بها عبر المنطقة.',
         subtitle: 'من سوسة إلى الجزائر والمغرب وكينيا والصين وإيطاليا ودبي — انقر على أي دولة لمعرفة القصة.',
         disclaimer: 'تكريمات ونتائج ذاتية التصريح من فوتوكارب في مسابقات ابتكار إقليمية وبرامج قطاعية؛ التفاصيل الكاملة للجهة المنظمة متاحة عند الطلب.',
       }
     : {
         eyebrow: 'Global Recognition',
-        title: 'Recognized Beyond Tunisia’s Borders.',
+        title: 'Recognized Across the Region.',
         subtitle: 'From Sousse to Algeria, Morocco, Kenya, China, Italy and Dubai — click any country to see the story.',
         disclaimer: 'Recognitions and rankings self-reported by Photocarb from regional innovation competitions and industry programs; full organizer details available on request.',
       }
