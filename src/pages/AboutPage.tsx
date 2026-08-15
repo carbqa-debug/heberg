@@ -1,8 +1,11 @@
 import CertMarquee from '../components/CertMarquee'
+import AchievementsMap from '../components/AchievementsMap'
+import Partners from '../components/Partners'
 import FinalCTA from '../components/FinalCTA'
 import { useInView } from '../hooks/useInView'
 import { useOdometer } from '../hooks/useOdometer'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { IconFactory, IconGlobe, IconChart } from '../components/icons'
 import { QatarFlag } from '../components/Flags'
 import { useLang } from '../i18n/LanguageContext'
@@ -12,7 +15,7 @@ const BOARD = [
     initials: 'IH',
     color: 'var(--color-qatar)',
     en: {
-      name: 'Ikram Fahd Al-Housni',
+      name: 'Ms. Ekram Fahad Alhosni',
       role: 'Chairman of the Board',
       messageTitle: "Chairman's Message",
       bismillah: 'In the name of God, the Most Gracious, the Most Merciful.',
@@ -30,7 +33,7 @@ const BOARD = [
       ],
     },
     ar: {
-      name: 'إكرام فهد الحوسني',
+      name: 'الأستاذة إكرام فهد الحوسني',
       role: 'رئيس مجلس الإدارة',
       messageTitle: 'كلمة رئيس مجلس الإدارة',
       bismillah: 'بسم الله الرحمن الرحيم',
@@ -52,7 +55,7 @@ const BOARD = [
     initials: 'IJ',
     color: 'var(--color-primary)',
     en: {
-      name: 'Imtinen Jemaa',
+      name: 'Ms. Imtinen Jemaa',
       role: 'Founder & Chief Technology Officer (CTO) — PhotoCarb Qatar',
       messageTitle: "Founder & CTO's Message",
       bismillah: 'In the name of God, the Most Gracious, the Most Merciful.',
@@ -67,7 +70,7 @@ const BOARD = [
       ],
     },
     ar: {
-      name: 'امتنان جماعة',
+      name: 'الأستاذة امتنان جماعة',
       role: 'المؤسِّسة والرئيسة التنفيذية للتقنية (CTO) — فوتوكارب قطر',
       messageTitle: 'كلمة المؤسِّسة والرئيسة التنفيذية للتقنية',
       bismillah: 'بسم الله الرحمن الرحيم',
@@ -88,7 +91,7 @@ const CEO_MESSAGE = {
   initials: 'IH',
   color: 'var(--color-primary)',
   en: {
-    name: 'Ikram Fahd Al-Housni',
+    name: 'Ms. Ekram Fahad Alhosni',
     role: 'Chief Executive Officer (CEO) & Co-Founder',
     bismillah: 'In the name of God, the Most Gracious, the Most Merciful.',
     lead: 'At PhotoCarb, technology is an effective tool to enable industrial and commercial organizations to achieve a sustainable environmental and economic impact.',
@@ -102,7 +105,7 @@ const CEO_MESSAGE = {
     ],
   },
   ar: {
-    name: 'إكرام فهد الحوسني',
+    name: 'الأستاذة إكرام فهد الحوسني',
     role: 'الرئيس التنفيذي والشريك المؤسس',
     bismillah: 'بسم الله الرحمن الرحيم',
     lead: 'في فوتوكارب، التكنولوجيا أداة فاعلة لتمكين الجهات والمنشآت الصناعية والتجارية من تحقيق أثر بيئي واقتصادي مستدام.',
@@ -131,6 +134,17 @@ const VISION_PILLARS = [
 ]
 
 export default function AboutPage() {
+  const location = useLocation()
+
+  useEffect(() => {
+    if (!location.hash) return
+    const id = location.hash.slice(1)
+    const t = setTimeout(() => {
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }, 80)
+    return () => clearTimeout(t)
+  }, [location.pathname, location.hash])
+
   return (
     <>
       <AboutHero />
@@ -138,6 +152,8 @@ export default function AboutPage() {
       <OriginStory />
       <CEOMessageSection />
       <LeadershipSection />
+      <AchievementsMap />
+      <Partners />
       <ValuesSection />
       <Vision2030 />
       <FinalCTA />
@@ -148,7 +164,7 @@ export default function AboutPage() {
 function AboutHero() {
   const { t } = useLang()
   return (
-    <section className="pt-32 pb-20 bg-[var(--color-bg)] relative overflow-hidden">
+    <section id="about-top" className="pt-32 pb-20 bg-[var(--color-bg)] relative overflow-hidden scroll-mt-20">
       <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 30% 60%, color-mix(in srgb, var(--color-lime) 6%, transparent) 0%, transparent 55%)' }} />
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
         <div className="max-w-[820px]">
@@ -176,7 +192,7 @@ function OriginStory() {
   const modules = useOdometer(7, visible, 1200)
 
   return (
-    <section ref={ref as React.RefObject<HTMLElement>} className="bg-[var(--color-bg-secondary)] py-16">
+    <section id="our-story" ref={ref as React.RefObject<HTMLElement>} className="bg-[var(--color-bg-secondary)] py-16 scroll-mt-20">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
         <div className={`grid lg:grid-cols-[1.5fr_1fr] gap-14 items-start fade-up ${visible ? 'visible' : ''}`}>
           <div>
@@ -223,8 +239,9 @@ function CEOMessageSection() {
 
   return (
     <section
+      id="ceo-message"
       ref={ref as React.RefObject<HTMLElement>}
-      className="relative overflow-hidden py-20"
+      className="relative overflow-hidden py-20 scroll-mt-20"
       style={{ background: 'linear-gradient(165deg, var(--color-tint-teal), var(--color-bg) 55%)' }}
     >
       {/* Hex pattern motif */}
@@ -319,7 +336,7 @@ function LeadershipSection() {
   const { t } = useLang()
 
   return (
-    <section ref={ref as React.RefObject<HTMLElement>} className="bg-[var(--color-bg)] py-16">
+    <section id="board-of-directors" ref={ref as React.RefObject<HTMLElement>} className="bg-[var(--color-bg)] py-16 scroll-mt-20">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
         <div className={`mb-14 fade-up ${visible ? 'visible' : ''}`}>
           <span className="text-[11px] font-semibold tracking-[0.2em] text-[var(--color-primary)] uppercase mb-4 block" style={{ fontFamily: 'var(--font-body)' }}>{t('about.board')}</span>
@@ -439,7 +456,7 @@ function ValuesSection() {
   const { ref, visible } = useInView(0.1)
   const { t } = useLang()
   return (
-    <section ref={ref as React.RefObject<HTMLElement>} className="bg-[var(--color-bg-secondary)] py-8">
+    <section id="our-values" ref={ref as React.RefObject<HTMLElement>} className="bg-[var(--color-bg-secondary)] py-8 scroll-mt-20">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12 pt-20">
         <div className={`text-center mb-6 fade-up ${visible ? 'visible' : ''}`}>
           <span className="text-[11px] font-semibold tracking-[0.2em] text-[var(--color-primary)] uppercase mb-4 block" style={{ fontFamily: 'var(--font-body)' }}>{t('about.valuesEyebrow')}</span>
@@ -492,8 +509,9 @@ function Vision2030() {
 
   return (
     <section
+      id="vision-2030"
       ref={ref as React.RefObject<HTMLElement>}
-      className="py-20 relative overflow-hidden"
+      className="py-20 relative overflow-hidden scroll-mt-20"
       style={{ background: 'linear-gradient(160deg, var(--color-qatar-tint), var(--color-bg-secondary) 60%)' }}
     >
       {/* Hex background pattern */}

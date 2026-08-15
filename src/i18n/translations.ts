@@ -7,6 +7,10 @@ import type { Lang } from './LanguageContext'
  */
 export const translations: Record<Lang, Record<string, string>> = {
   en: {
+    // Brand
+    'brand.name': 'Photocarb',
+    'brand.tagline': 'Environmental Technology',
+
     // Common / buttons
     'common.bookDemo': 'Book a Demo',
     'common.getStarted': 'Get Started',
@@ -70,6 +74,14 @@ export const translations: Record<Lang, Record<string, string>> = {
     'nav.contact': 'Contact',
     'nav.ourServices': 'Our Services',
     'nav.reportsReady': 'Reports ready in 48 hours · Doha + Sousse',
+    'nav.aboutOverview': 'About Photocarb',
+    'nav.ourStory': 'Our Story',
+    'nav.ceoMessage': 'CEO Message',
+    'nav.boardOfDirectors': 'Board of Directors',
+    'nav.globalRecognition': 'Global Recognition',
+    'nav.ourEcosystem': 'Our Ecosystem',
+    'nav.ourValues': 'Our Values',
+    'nav.vision2030': 'Vision 2030',
     'nav.language': 'العربية',
 
     // Hero (home)
@@ -81,7 +93,7 @@ export const translations: Record<Lang, Record<string, string>> = {
     'hero.pill': 'Measure · Reduce · Comply',
     'hero.poweringYour': 'Powering your',
     'hero.description':
-      "Photocarb is Qatar's first AI-powered carbon intelligence platform — unifying CO₂ hardware sensing, bilan carbone, ESG reporting, and CBAM compliance in one integrated system, built for Ras Laffan, Mesaieed, and the Gulf industrial corridor.",
+      "Industrial emissions cost facilities billions of dollars, and we built the solution. We're redefining carbon emissions management through technology. We develop integrated solutions that combine software, hardware, and AI to empower industrial and commercial entities to measure and manage their emissions efficiently and reliably.",
 
     // Footer
     'footer.tagline': 'AI-powered Carbon Intelligence for Gulf industrial operators. Headquartered in Doha, Qatar.',
@@ -105,6 +117,13 @@ export const translations: Record<Lang, Record<string, string>> = {
     'footer.qatarAddress': 'West Bay Business District, Doha, Qatar',
     'footer.tunisiaAddress': 'Avenue Yasser Arafat, Sahloul, Sousse, Tunisia',
     'footer.rights': '© 2026 Photocarb Technologies LLC. Registered in Qatar. CR: 243466.',
+    'footer.followUs': 'Follow us',
+    'footer.newsletterLabel': 'Stay Updated',
+    'footer.newsletterDesc': 'Monthly regulatory updates. No spam.',
+    'footer.newsletterPlaceholder': 'you@company.com',
+    'footer.newsletterSubmit': 'Subscribe',
+    'footer.newsletterSuccess': "You're subscribed.",
+    'footer.newsletterError': 'Something went wrong. Please try again.',
 
     // Page hero eyebrows / titles
     'page.about.eyebrow': 'About Photocarb',
@@ -401,6 +420,10 @@ export const translations: Record<Lang, Record<string, string>> = {
   },
 
   ar: {
+    // Brand
+    'brand.name': 'فوتوكارب',
+    'brand.tagline': 'التكنولوجيا البيئية',
+
     // Common / buttons
     'common.bookDemo': 'احجز عرضًا توضيحيًا',
     'common.getStarted': 'ابدأ الآن',
@@ -421,12 +444,12 @@ export const translations: Record<Lang, Record<string, string>> = {
     'about.heroTitleAccent': 'بنيناها في راس لفان.',
     'about.heroSubtitle': 'تأسّست على يد مهندسين صناعيين وباحثين في الذكاء الاصطناعي أمضوا عقودًا داخل منشآت البتروكيماويات الخليجية — لا من يقدّمون النصح من الخارج.',
     'about.storyEyebrow': 'قصتنا',
-    'about.storyTitle': 'وُلِدت داخل القطاع الصناعي القطري.',
-    'about.storyTitleAccent': 'ومصمَّمة للعالم.',
-    'about.story.p1': 'وُلِدت فوتوكارب من تحدٍّ واضح لوحظ داخل القطاع الصناعي القطري: فمع تشدّد اللوائح المناخية العالمية، بات يُتوقَّع من الشركات على نحو متزايد إنتاج بيانات كربونية دقيقة وقابلة للتدقيق، بينما كانت الحلول القائمة غالبًا معقّدة أو مجزّأة أو غير مصمَّمة لواقع الصناعات الخليجية.',
-    'about.story.p2': 'تأسّست فوتوكارب على يد امتنان جماعة، المؤسِّسة والرئيسة التنفيذية للتقنية، وسُجِّلت في الدوحة، قطر، عام 2024، مع إنشاء مركز الهندسة والبحث والتطوير في سوسة، تونس، عام 2025. ومنذ البداية، كانت مهمتنا تحويل الاستدامة من التزام تقريري إلى ميزة استراتيجية للأعمال.',
-    'about.story.p3': 'وبالجمع بين الذكاء الاصطناعي، والمحاسبة الكربونية المتقدمة، وتقييم دورة الحياة (LCA)، وذكاء ESG، والامتثال لـ CBAM، وأنظمة MRV، وتحليلات سلسلة التوريد ضمن منصة واحدة، تُمكّن فوتوكارب المؤسسات من قياس أثرها البيئي وإدارته وخفضه بثقة.',
-    'about.story.p4': 'واليوم، تبني فوتوكارب الجيل القادم من حلول التقنية المناخية لمنطقة الشرق الأوسط وشمال إفريقيا وما بعدها، لمساعدة الصناعات والحكومات والمؤسسات على تسريع رحلتها نحو الحياد الكربوني مع الوفاء بأعلى معايير الاستدامة الدولية.',
+    'about.storyTitle': 'وُلدت من واقع التحديات…',
+    'about.storyTitleAccent': 'وبُنيت للمستقبل.',
+    'about.story.p1': 'انطلقت PhotoCarb استجابةً للتحولات المتسارعة في مجالات الاستدامة والعمل المناخي، حيث أصبحت الجهات والمنشآت حول العالم مطالبة بقياس انبعاثاتها الكربونية وإدارتها بدقة وشفافية، والامتثال لمتطلبات وتشريعات بيئية تتطور باستمرار. وفي الوقت نفسه، كانت العديد من الحلول المتاحة معقدة أو مجزأة أو لا توفر رؤية متكاملة تساعد على اتخاذ القرار.',
+    'about.story.p2': 'ومن هذا الواقع، تأسست PhotoCarb كشركة متخصصة في التكنولوجيا البيئية (Environmental Technology)، بهدف تطوير منظومة تقنية متكاملة تجمع بين البرمجيات، والأجهزة الذكية، والذكاء الاصطناعي، لتقديم حلول متقدمة تساعد الجهات والمنشآت على قياس الانبعاثات الكربونية، وإدارتها، وتحليلها، وتحويل بيانات الاستدامة إلى قرارات استراتيجية تدعم الكفاءة والامتثال والنمو المستدام.',
+    'about.story.p3': 'وتغطي حلول PhotoCarb مجموعة واسعة من التطبيقات، تشمل إدارة الكربون، والبصمة الكربونية، وتقييم دورة الحياة (LCA)، وتقارير الاستدامة (ESG)، والامتثال للأنظمة والمعايير الدولية، وتحليلات سلسلة التوريد، ضمن منظومة تقنية واحدة صُممت لتلبية احتياجات المؤسسات بمختلف قطاعاتها.',
+    'about.story.p4': 'واليوم، تواصل PhotoCarb تطوير الجيل القادم من حلول تكنولوجيا المناخ، برؤية تنطلق من الخليج نحو الأسواق العالمية، والمساهمة في تمكين المؤسسات من تحقيق أهدافها البيئية، وتعزيز تنافسيتها، ودعم رحلتها',
     'about.stat.founded': 'التأسيس — الدوحة، قطر',
     'about.stat.rd': 'مركز البحث والتطوير — سوسة، تونس',
     'about.stat.modules': 'وحدات ذكاء كربوني متكاملة',
@@ -464,6 +487,14 @@ export const translations: Record<Lang, Record<string, string>> = {
     'nav.contact': 'اتصل بنا',
     'nav.ourServices': 'خدماتنا',
     'nav.reportsReady': 'التقارير جاهزة خلال 48 ساعة · الدوحة + سوسة',
+    'nav.aboutOverview': 'عن فوتوكارب',
+    'nav.ourStory': 'قصتنا',
+    'nav.ceoMessage': 'كلمة الرئيس التنفيذي',
+    'nav.boardOfDirectors': 'مجلس الإدارة',
+    'nav.globalRecognition': 'حضور عالمي',
+    'nav.ourEcosystem': 'منظومتنا',
+    'nav.ourValues': 'قيمنا',
+    'nav.vision2030': 'رؤية 2030',
     'nav.language': 'English',
 
     // Hero (home)
@@ -475,7 +506,7 @@ export const translations: Record<Lang, Record<string, string>> = {
     'hero.pill': 'قِس · قلّل · امتثل',
     'hero.poweringYour': 'نُشغّل',
     'hero.description':
-      'فوتوكارب هي أول منصة ذكاء كربوني مدعومة بالذكاء الاصطناعي في قطر — تجمع بين استشعار ثاني أكسيد الكربون بالأجهزة، والبصمة الكربونية، وتقارير الاستدامة، والامتثال لآلية CBAM في نظام متكامل واحد، مصمَّم لراس لفان ومسيعيد والممر الصناعي الخليجي.',
+      'الانبعاثات الصناعية تكلف المنشآت مليارات الدولارات، ونحن صنعنا الحل. نعيد تعريف إدارة الانبعاثات الكربونية بالتكنولوجيا. نطور حلولاً متكاملة تجمع بين البرمجيات والأجهزة والذكاء الاصطناعي لتمكين الجهات والمنشآت الصناعية والتجارية من قياس الانبعاثات وإدارتها بكفاءة وموثوقية.',
 
     // Footer
     'footer.tagline': 'ذكاء كربوني مدعوم بالذكاء الاصطناعي لمشغّلي الصناعة في الخليج. المقر الرئيسي في الدوحة، قطر.',
@@ -499,6 +530,13 @@ export const translations: Record<Lang, Record<string, string>> = {
     'footer.qatarAddress': 'حي الخليج الغربي التجاري، الدوحة، قطر',
     'footer.tunisiaAddress': 'شارع ياسر عرفات، سهلول، سوسة، تونس',
     'footer.rights': '© 2026 فوتوكارب تكنولوجيز ذ.م.م. مسجّلة في قطر. س.ت: 243466.',
+    'footer.followUs': 'تابعونا',
+    'footer.newsletterLabel': 'ابقَ على اطّلاع',
+    'footer.newsletterDesc': 'تحديثات تنظيمية شهرية. دون رسائل مزعجة.',
+    'footer.newsletterPlaceholder': 'بريدك@شركتك.com',
+    'footer.newsletterSubmit': 'اشترك',
+    'footer.newsletterSuccess': 'تم اشتراكك.',
+    'footer.newsletterError': 'حدث خطأ ما. يُرجى إعادة المحاولة.',
 
     // Page hero eyebrows / titles
     'page.about.eyebrow': 'عن فوتوكارب',

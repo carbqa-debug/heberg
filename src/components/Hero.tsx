@@ -49,12 +49,6 @@ export default function Hero() {
                   {t('hero.eyebrow')}
                 </span>
               </div>
-              <span
-                className="text-[10px] font-bold tracking-[0.16em] uppercase px-2.5 py-1 rounded-full"
-                style={{ fontFamily: 'var(--font-body)', color: 'var(--color-qatar)', background: 'var(--color-qatar-tint)' }}
-              >
-                {t('hero.builtForQatar')}
-              </span>
             </motion.div>
 
             {/* Headline — staggered lines */}

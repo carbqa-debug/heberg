@@ -9,19 +9,31 @@ import { IconGlobe } from './icons'
 const SCROLL_THRESHOLD = 80
 
 const LINKS = [
-  { key: 'nav.about', to: '/about' },
   { key: 'nav.technology', to: '/technology' },
   { key: 'nav.compliance', to: '/compliance' },
   { key: 'nav.caseStudies', to: '/case-studies' },
   { key: 'nav.contact', to: '/contact' },
 ]
 
+const ABOUT_LINKS = [
+  { key: 'nav.aboutOverview', hash: 'about-top' },
+  { key: 'nav.ourStory', hash: 'our-story' },
+  { key: 'nav.ceoMessage', hash: 'ceo-message' },
+  { key: 'nav.boardOfDirectors', hash: 'board-of-directors' },
+  { key: 'nav.globalRecognition', hash: 'global-recognition' },
+  { key: 'nav.ourEcosystem', hash: 'our-ecosystem' },
+  { key: 'nav.ourValues', hash: 'our-values' },
+  { key: 'nav.vision2030', hash: 'vision-2030' },
+]
+
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false)
   const [servicesOpen, setServicesOpen] = useState(false)
+  const [aboutOpen, setAboutOpen] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const location = useLocation()
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const aboutCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const { t, lang, toggle } = useLang()
   const services = SERVICES.map(s => localizeService(s, lang))
 
@@ -33,14 +45,18 @@ export default function Nav() {
   }, [])
 
   useEffect(() => {
-    window.scrollTo(0, 0)
+    if (!location.hash) window.scrollTo(0, 0)
     setMobileOpen(false)
     setServicesOpen(false)
+    setAboutOpen(false)
   }, [location.pathname])
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setServicesOpen(false)
+      if (e.key === 'Escape') {
+        setServicesOpen(false)
+        setAboutOpen(false)
+      }
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
@@ -54,7 +70,16 @@ export default function Nav() {
     closeTimer.current = setTimeout(() => setServicesOpen(false), 150)
   }
 
+  const openAbout = () => {
+    if (aboutCloseTimer.current) clearTimeout(aboutCloseTimer.current)
+    setAboutOpen(true)
+  }
+  const scheduleCloseAbout = () => {
+    aboutCloseTimer.current = setTimeout(() => setAboutOpen(false), 150)
+  }
+
   const isServicesActive = location.pathname === '/services'
+  const isAboutActive = location.pathname === '/about'
 
   return (
     <nav
@@ -151,6 +176,57 @@ export default function Nav() {
             </AnimatePresence>
           </div>
 
+          {/* About dropdown trigger */}
+          <div
+            className="relative"
+            onMouseEnter={openAbout}
+            onMouseLeave={scheduleCloseAbout}
+          >
+            <button
+              type="button"
+              onClick={() => setAboutOpen(v => !v)}
+              aria-expanded={aboutOpen}
+              className={`flex items-center gap-1.5 px-3 py-2 text-sm font-medium rounded-full transition-colors ${
+                isAboutActive || aboutOpen
+                  ? 'text-[var(--color-primary)]'
+                  : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
+              }`}
+            >
+              {t('nav.about')}
+              <svg
+                width="11" height="11" viewBox="0 0 12 12" fill="none"
+                className="transition-transform duration-200"
+                style={{ transform: aboutOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}
+              >
+                <path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+
+            <AnimatePresence>
+              {aboutOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -6, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -6, scale: 0.98 }}
+                  transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
+                  className="absolute top-full start-0 pt-3 w-[240px]"
+                >
+                  <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl shadow-[var(--shadow-card-hover)] overflow-hidden p-2">
+                    {ABOUT_LINKS.map(item => (
+                      <Link
+                        key={item.hash}
+                        to={`/about#${item.hash}`}
+                        className="block rounded-xl px-3.5 py-2.5 text-[13.5px] font-medium text-[var(--color-text-primary)] hover:bg-[var(--color-bg)] hover:text-[var(--color-primary)] transition-colors"
+                      >
+                        {t(item.key)}
+                      </Link>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
           {LINKS.map(l => {
             const isActive = location.pathname === l.to
             return (
@@ -241,6 +317,15 @@ export default function Nav() {
                     </Link>
                   )
                 })}
+              </div>
+              <div className="h-px bg-[var(--color-border)] my-2" />
+              <div className="text-[11px] font-semibold tracking-[0.16em] uppercase text-[var(--color-text-secondary)] mt-1 mb-1.5">{t('nav.about')}</div>
+              <div className="flex flex-col mb-3">
+                {ABOUT_LINKS.map(item => (
+                  <Link key={item.hash} to={`/about#${item.hash}`} className="py-2 text-[13.5px] font-medium text-[var(--color-text-primary)]">
+                    {t(item.key)}
+                  </Link>
+                ))}
               </div>
               <div className="h-px bg-[var(--color-border)] my-2" />
               {LINKS.map(l => (

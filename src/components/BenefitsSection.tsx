@@ -42,14 +42,14 @@ const BENEFITS = [
 export default function BenefitsSection() {
   return (
     <section className="bg-[var(--color-bg-secondary)] py-8">
-      {BENEFITS.map((b, i) => (
-        <BenefitBlock key={b.num} benefit={b} flip={i % 2 === 1} />
+      {BENEFITS.map(b => (
+        <BenefitBlock key={b.num} benefit={b} />
       ))}
     </section>
   )
 }
 
-function BenefitBlock({ benefit: b, flip }: { benefit: typeof BENEFITS[0]; flip: boolean }) {
+function BenefitBlock({ benefit: b }: { benefit: typeof BENEFITS[0] }) {
   const { ref, visible } = useInView(0.2)
   const count = useOdometer(b.stat, visible)
   const { t } = useLang()
@@ -59,12 +59,13 @@ function BenefitBlock({ benefit: b, flip }: { benefit: typeof BENEFITS[0]; flip:
       ref={ref as React.RefObject<HTMLDivElement>}
       className="max-w-[1400px] mx-auto px-6 lg:px-12 py-14 lg:py-16"
     >
-      <div className={`grid lg:grid-cols-2 gap-12 lg:gap-20 items-center ${flip ? 'direction-rtl' : ''}`}>
+      {/* Text always renders first in source order — physically left in LTR, physically right in RTL (via the document's dir attribute), so no per-item flip is needed. */}
+      <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
         {/* Content */}
-        <div className={`relative ${flip ? 'lg:order-2' : ''} fade-up ${visible ? 'visible' : ''}`}>
+        <div className={`relative fade-up ${visible ? 'visible' : ''}`}>
           {/* Oversized background numeral */}
           <div
-            className="absolute -top-8 -left-4 text-[180px] font-bold leading-none pointer-events-none select-none gradient-numeral opacity-[0.08]"
+            className="absolute -top-8 -start-4 text-[180px] font-bold leading-none pointer-events-none select-none gradient-numeral opacity-[0.08]"
             style={{ fontFamily: 'var(--font-display)', zIndex: 0 }}
           >
             {b.num}
@@ -125,7 +126,7 @@ function BenefitBlock({ benefit: b, flip }: { benefit: typeof BENEFITS[0]; flip:
         </div>
 
         {/* Visual panel */}
-        <div className={`${flip ? 'lg:order-1' : ''} fade-up ${visible ? 'visible' : ''} stagger-2`}>
+        <div className={`fade-up ${visible ? 'visible' : ''} stagger-2`}>
           <VisualPanel type={b.visual} color={b.color} num={b.num} />
         </div>
       </div>

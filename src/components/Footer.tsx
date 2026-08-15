@@ -1,9 +1,18 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import PhotoCarbLogo from './PhotoCarbLogo'
 import { SERVICES, localizeService, getServiceById } from '../data/services'
 import { QatarFlag, TunisiaFlag } from './Flags'
-import { IconMail, IconPhone } from './icons'
+import { IconMail, IconPhone, IconCheck, IconGlobe, IconInstagram, IconLinkedIn, IconFacebook } from './icons'
 import { useLang } from '../i18n/LanguageContext'
+
+const SOCIAL = [
+  { name: 'Website', href: 'https://www.photocarb.qa', icon: IconGlobe, color: 'var(--color-info)' },
+  { name: 'Instagram', href: 'https://www.instagram.com/photo.carb', icon: IconInstagram, color: 'var(--color-violet)' },
+  { name: 'LinkedIn', href: 'https://www.linkedin.com/company/PhotoCarb', icon: IconLinkedIn, color: 'var(--color-navy)' },
+  { name: 'Facebook', href: 'https://www.facebook.com/Photocarb', icon: IconFacebook, color: 'var(--color-primary)' },
+  { name: 'Email', href: 'mailto:contact@photocarb.qa', icon: IconMail, color: 'var(--color-lime)' },
+] as const
 
 const COLS = [
   {
@@ -47,16 +56,158 @@ const CONTACT = [
     cityKey: 'contact.sousse',
     labelKey: 'footer.engineeringCentre',
     addressKey: 'footer.tunisiaAddress',
-    email: 'engineering@photocarb.com',
-    phone: '+216 70 000 000',
+    email: 'contact@photocarb.com',
+    phone: '+216 58 56 10 00',
     color: 'var(--color-tunisia)',
   },
 ]
 
 const CERTS = ['ISO 14064', 'CBAM', 'IFRS S2', 'GHG Protocol', 'QRDI', 'Qatar Vision 2030']
 
-export default function Footer() {
+function Newsletter() {
+  const { t } = useLang()
+  const [email, setEmail] = useState('')
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
+  const [error, setError] = useState<string | null>(null)
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setStatus('submitting')
+    setError(null)
+    try {
+      const res = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      })
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}))
+        throw new Error(body.error || t('footer.newsletterError'))
+      }
+      setStatus('success')
+    } catch (err) {
+      setError(err instanceof Error ? err.message : t('footer.newsletterError'))
+      setStatus('error')
+    }
+  }
+
+  return (
+    <div
+      className="relative overflow-hidden rounded-2xl border p-5"
+      style={{
+        borderColor: 'color-mix(in srgb, var(--color-primary) 18%, var(--color-border))',
+        background: 'linear-gradient(155deg, color-mix(in srgb, var(--color-primary) 8%, transparent), var(--color-surface) 60%)',
+        boxShadow: 'var(--shadow-card)',
+      }}
+    >
+      <div
+        className="pointer-events-none absolute -top-10 -end-10 w-32 h-32 rounded-full opacity-20 blur-2xl"
+        style={{ background: 'var(--color-primary)' }}
+      />
+
+      <div className="relative flex items-center gap-2.5 mb-4">
+        <span
+          className="w-8 h-8 rounded-full flex items-center justify-center shrink-0"
+          style={{ background: 'color-mix(in srgb, var(--color-primary) 16%, transparent)', color: 'var(--color-primary)' }}
+        >
+          <IconMail size={14} strokeWidth={1.8} />
+        </span>
+        <div>
+          <div className="text-[13.5px] font-bold text-[var(--color-text-primary)] leading-tight" style={{ fontFamily: 'var(--font-body)' }}>
+            {t('footer.newsletterLabel')}
+          </div>
+          <div className="text-[11.5px] text-[var(--color-text-secondary)] leading-tight" style={{ fontFamily: 'var(--font-body)' }}>
+            {t('footer.newsletterDesc')}
+          </div>
+        </div>
+      </div>
+
+      {status === 'success' ? (
+        <div className="relative flex items-center gap-2 text-[13px] font-semibold" style={{ color: 'var(--color-primary)', fontFamily: 'var(--font-body)' }}>
+          <IconCheck size={15} strokeWidth={2.6} />
+          {t('footer.newsletterSuccess')}
+        </div>
+      ) : (
+        <div className="relative">
+          <form onSubmit={handleSubmit} className="relative">
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              placeholder={t('footer.newsletterPlaceholder')}
+              className="w-full min-w-0 border border-[var(--color-border)] bg-[var(--color-bg)] rounded-full ps-4 pe-[5.7rem] py-2.5 text-[13px] text-[var(--color-text-primary)] focus:outline-none focus:border-[var(--color-primary)] transition-colors"
+              style={{ fontFamily: 'var(--font-body)' }}
+            />
+            <button
+              type="submit"
+              disabled={status === 'submitting'}
+              className="absolute end-1 top-1 bottom-1 inline-flex items-center gap-1 bg-[var(--color-primary)] text-white text-[12px] font-semibold px-3.5 rounded-full hover:bg-[var(--color-primary-deep)] transition-colors disabled:opacity-60"
+              style={{ fontFamily: 'var(--font-body)' }}
+            >
+              {status === 'submitting' ? (
+                <span className="w-3.5 h-3.5 rounded-full border-2 border-white/40 border-t-white animate-spin" />
+              ) : (
+                <>
+                  {t('footer.newsletterSubmit')}
+                  <svg className="rtl-flip" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M2.5 6h7M6.5 2.5L10 6l-3.5 3.5"/></svg>
+                </>
+              )}
+            </button>
+          </form>
+          {error && (
+            <p className="text-[11.5px] mt-1.5" style={{ color: 'var(--color-danger)', fontFamily: 'var(--font-body)' }}>{error}</p>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
+function FooterCol({ col, color }: { col: typeof COLS[number]; color: string }) {
   const { t, lang } = useLang()
+  return (
+    <div>
+      <h4
+        className="text-[11px] font-semibold tracking-[0.2em] uppercase mb-5"
+        style={{ fontFamily: 'var(--font-body)', color }}
+      >
+        {t(col.titleKey)}
+      </h4>
+      <ul className="space-y-2.5">
+        {col.links.map(l => {
+          const label =
+            'labelKey' in l ? t(l.labelKey)
+            : getServiceById(l.serviceId) ? localizeService(getServiceById(l.serviceId)!, lang).title : l.serviceId
+          return (
+            <li key={l.to + label}>
+              {l.to.startsWith('/') ? (
+                <Link
+                  to={l.to}
+                  className="nav-link-underline text-[13px] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
+                  style={{ fontFamily: 'var(--font-body)' }}
+                >
+                  {label}
+                </Link>
+              ) : (
+                <a
+                  href={l.to}
+                  className="nav-link-underline text-[13px] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
+                  style={{ fontFamily: 'var(--font-body)' }}
+                >
+                  {label}
+                </a>
+              )}
+            </li>
+          )
+        })}
+      </ul>
+    </div>
+  )
+}
+
+export default function Footer() {
+  const { t } = useLang()
   return (
     <footer className="relative bg-[var(--color-bg-secondary)] border-t border-[var(--color-border)] overflow-hidden">
       {/* Decorative gradient wash */}
@@ -83,58 +234,41 @@ export default function Footer() {
             >
               {t('footer.tagline')}
             </p>
-            <div className="flex gap-2.5">
-              {['LinkedIn', 'Twitter', 'Email'].map(s => (
-                <a
-                  key={s}
-                  href="#"
-                  className="text-[11px] font-medium text-[var(--color-text-secondary)] border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-1.5 rounded-full hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] transition-colors"
-                  style={{ fontFamily: 'var(--font-body)' }}
-                >
-                  {s}
-                </a>
-              ))}
+            <div>
+              <div className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[var(--color-text-secondary)] mb-2.5" style={{ fontFamily: 'var(--font-body)' }}>
+                {t('footer.followUs')}
+              </div>
+              <div className="flex gap-2">
+                {SOCIAL.map(s => (
+                  <a
+                    key={s.name}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={s.name}
+                    title={s.name}
+                    className="w-9 h-9 rounded-full flex items-center justify-center border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-secondary)] transition-all duration-200 hover:-translate-y-0.5 hover:text-[var(--sc)] hover:border-[var(--sc)] hover:shadow-[0_4px_12px_color-mix(in_srgb,var(--sc)_30%,transparent)]"
+                    style={{ ['--sc' as string]: s.color }}
+                  >
+                    <s.icon size={15} strokeWidth={1.7} />
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
 
-          {COLS.map((col, ci) => (
-            <div key={col.titleKey}>
-              <h4
-                className="text-[11px] font-semibold tracking-[0.2em] uppercase mb-5"
-                style={{ fontFamily: 'var(--font-body)', color: ['var(--color-primary)', 'var(--color-violet)', 'var(--color-info)'][ci] }}
-              >
-                {t(col.titleKey)}
-              </h4>
-              <ul className="space-y-2.5">
-                {col.links.map(l => {
-                  const label =
-                    'labelKey' in l ? t(l.labelKey)
-                    : getServiceById(l.serviceId) ? localizeService(getServiceById(l.serviceId)!, lang).title : l.serviceId
-                  return (
-                    <li key={l.to + label}>
-                      {l.to.startsWith('/') ? (
-                        <Link
-                          to={l.to}
-                          className="nav-link-underline text-[13px] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
-                          style={{ fontFamily: 'var(--font-body)' }}
-                        >
-                          {label}
-                        </Link>
-                      ) : (
-                        <a
-                          href={l.to}
-                          className="nav-link-underline text-[13px] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
-                          style={{ fontFamily: 'var(--font-body)' }}
-                        >
-                          {label}
-                        </a>
-                      )}
-                    </li>
-                  )
-                })}
-              </ul>
+          <FooterCol col={COLS[0]} color="var(--color-primary)" />
+
+          {/* Company + Legal side by side, with the newsletter filling the space beneath them */}
+          <div className="sm:col-span-2 lg:col-span-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
+              <FooterCol col={COLS[1]} color="var(--color-violet)" />
+              <FooterCol col={COLS[2]} color="var(--color-info)" />
             </div>
-          ))}
+            <div className="mt-8">
+              <Newsletter />
+            </div>
+          </div>
         </div>
 
         {/* Contact block */}

@@ -469,3 +469,34 @@ export function IconBadge({
     </span>
   )
 }
+
+export function IconInstagram({ size, className, strokeWidth, style }: IconProps) {
+  return (
+    <svg {...base(size, strokeWidth)} className={className} style={style} aria-hidden="true">
+      <rect x="3" y="3" width="18" height="18" rx="5.5" />
+      <circle cx="12" cy="12" r="4.2" />
+      <circle cx="17.2" cy="6.8" r="0.9" fill="currentColor" stroke="none" />
+    </svg>
+  )
+}
+
+export function IconLinkedIn({ size, className, strokeWidth, style }: IconProps) {
+  return (
+    <svg {...base(size, strokeWidth)} className={className} style={style} aria-hidden="true">
+      <rect x="3" y="3" width="18" height="18" rx="3" />
+      <circle cx="7.8" cy="7.6" r="1" fill="currentColor" stroke="none" />
+      <path d="M7.8 10.8V17" />
+      <path d="M11.6 17v-6.2" />
+      <path d="M11.6 12.2c0-1.1.9-2 2-2s2 .9 2 2V17" />
+    </svg>
+  )
+}
+
+export function IconFacebook({ size, className, strokeWidth, style }: IconProps) {
+  return (
+    <svg {...base(size, strokeWidth)} className={className} style={style} aria-hidden="true">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M14 7.5h-1.2c-1.1 0-2 .9-2 2v2H9v2.3h1.8V19h2.4v-5.2h1.9l.3-2.3h-2.2v-1.6c0-.4.3-.7.7-.7H14V7.5Z" />
+    </svg>
+  )
+}
