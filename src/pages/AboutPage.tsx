@@ -1,11 +1,9 @@
 import CertMarquee from '../components/CertMarquee'
-import AchievementsMap from '../components/AchievementsMap'
-import Partners from '../components/Partners'
 import FinalCTA from '../components/FinalCTA'
 import { useInView } from '../hooks/useInView'
 import { useOdometer } from '../hooks/useOdometer'
-import { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useHashScroll } from '../hooks/useHashScroll'
+import { useState } from 'react'
 import { IconFactory, IconGlobe, IconChart } from '../components/icons'
 import { QatarFlag } from '../components/Flags'
 import { useLang } from '../i18n/LanguageContext'
@@ -134,16 +132,7 @@ const VISION_PILLARS = [
 ]
 
 export default function AboutPage() {
-  const location = useLocation()
-
-  useEffect(() => {
-    if (!location.hash) return
-    const id = location.hash.slice(1)
-    const t = setTimeout(() => {
-      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }, 80)
-    return () => clearTimeout(t)
-  }, [location.pathname, location.hash])
+  useHashScroll()
 
   return (
     <>
@@ -152,8 +141,6 @@ export default function AboutPage() {
       <OriginStory />
       <CEOMessageSection />
       <LeadershipSection />
-      <AchievementsMap />
-      <Partners />
       <ValuesSection />
       <Vision2030 />
       <FinalCTA />

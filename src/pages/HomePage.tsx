@@ -10,8 +10,11 @@ import CaseStudies from '../components/CaseStudies'
 import AchievementsMap from '../components/AchievementsMap'
 import Partners from '../components/Partners'
 import FinalCTA from '../components/FinalCTA'
+import { useHashScroll } from '../hooks/useHashScroll'
 
 export default function HomePage() {
+  useHashScroll()
+
   return (
     <>
       <Hero />

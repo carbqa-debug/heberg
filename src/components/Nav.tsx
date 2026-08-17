@@ -16,14 +16,12 @@ const LINKS = [
 ]
 
 const ABOUT_LINKS = [
-  { key: 'nav.aboutOverview', hash: 'about-top' },
-  { key: 'nav.ourStory', hash: 'our-story' },
-  { key: 'nav.ceoMessage', hash: 'ceo-message' },
-  { key: 'nav.boardOfDirectors', hash: 'board-of-directors' },
-  { key: 'nav.globalRecognition', hash: 'global-recognition' },
-  { key: 'nav.ourEcosystem', hash: 'our-ecosystem' },
-  { key: 'nav.ourValues', hash: 'our-values' },
-  { key: 'nav.vision2030', hash: 'vision-2030' },
+  { key: 'nav.aboutOverview', hash: 'about-top', path: '/about' },
+  { key: 'nav.ourStory', hash: 'our-story', path: '/about' },
+  { key: 'nav.ceoMessage', hash: 'ceo-message', path: '/about' },
+  { key: 'nav.boardOfDirectors', hash: 'board-of-directors', path: '/about' },
+  { key: 'nav.ourValues', hash: 'our-values', path: '/about' },
+  { key: 'nav.vision2030', hash: 'vision-2030', path: '/about' },
 ]
 
 export default function Nav() {
@@ -215,7 +213,7 @@ export default function Nav() {
                     {ABOUT_LINKS.map(item => (
                       <Link
                         key={item.hash}
-                        to={`/about#${item.hash}`}
+                        to={`${item.path}#${item.hash}`}
                         className="block rounded-xl px-3.5 py-2.5 text-[13.5px] font-medium text-[var(--color-text-primary)] hover:bg-[var(--color-bg)] hover:text-[var(--color-primary)] transition-colors"
                       >
                         {t(item.key)}
@@ -322,7 +320,7 @@ export default function Nav() {
               <div className="text-[11px] font-semibold tracking-[0.16em] uppercase text-[var(--color-text-secondary)] mt-1 mb-1.5">{t('nav.about')}</div>
               <div className="flex flex-col mb-3">
                 {ABOUT_LINKS.map(item => (
-                  <Link key={item.hash} to={`/about#${item.hash}`} className="py-2 text-[13.5px] font-medium text-[var(--color-text-primary)]">
+                  <Link key={item.hash} to={`${item.path}#${item.hash}`} className="py-2 text-[13.5px] font-medium text-[var(--color-text-primary)]">
                     {t(item.key)}
                   </Link>
                 ))}
