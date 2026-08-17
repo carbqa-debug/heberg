@@ -14,7 +14,7 @@ const BOARD = [
     color: 'var(--color-qatar)',
     en: {
       name: 'Ms. Ekram Fahad Alhosni',
-      role: 'Chairman of the Board',
+      role: 'Co-founder & Chairman of the Board',
       messageTitle: "Chairman's Message",
       bismillah: 'In the name of God, the Most Gracious, the Most Merciful.',
       paragraphs: [
@@ -32,7 +32,7 @@ const BOARD = [
     },
     ar: {
       name: 'الأستاذة إكرام فهد الحوسني',
-      role: 'رئيس مجلس الإدارة',
+      role: 'الشريك المؤسس ورئيس مجلس الإدارة',
       messageTitle: 'كلمة رئيس مجلس الإدارة',
       bismillah: 'بسم الله الرحمن الرحيم',
       paragraphs: [
@@ -54,7 +54,7 @@ const BOARD = [
     color: 'var(--color-primary)',
     en: {
       name: 'Ms. Imtinen Jemaa',
-      role: 'Founder & Chief Technology Officer (CTO) — PhotoCarb Qatar',
+      role: 'Co-founder & Vice Chairman of the Board',
       messageTitle: "Founder & CTO's Message",
       bismillah: 'In the name of God, the Most Gracious, the Most Merciful.',
       paragraphs: [
@@ -69,8 +69,8 @@ const BOARD = [
     },
     ar: {
       name: 'الأستاذة امتنان جماعة',
-      role: 'المؤسِّسة والرئيسة التنفيذية للتقنية (CTO) — فوتوكارب قطر',
-      messageTitle: 'كلمة المؤسِّسة والرئيسة التنفيذية للتقنية',
+      role: 'الشريك المؤسس ونائبة مجلس الإدارة',
+      messageTitle: 'كلمة نائبة مجلس الإدارة',
       bismillah: 'بسم الله الرحمن الرحيم',
       paragraphs: [
         'الحمد لله رب العالمين، والصلاة والسلام على سيدنا محمد صلى الله عليه وسلم.',

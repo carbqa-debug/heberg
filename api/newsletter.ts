@@ -1,4 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
+import { renderBrandedEmail, sendResendEmail } from './_lib/email'
 
 interface NewsletterPayload {
   email?: string
@@ -17,6 +18,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const apiKey = process.env.RESEND_API_KEY
   const toEmail = process.env.CONTACT_TO_EMAIL || 'contact@photocarb.qa'
   const fromEmail = process.env.CONTACT_FROM_EMAIL || 'Photocarb Website <onboarding@resend.dev>'
+  const siteUrl = process.env.SITE_URL || 'https://www.photocarb.qa'
 
   if (!apiKey) {
     console.error('RESEND_API_KEY is not configured')
@@ -28,31 +30,41 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(400).json({ error: 'A valid email address is required.' })
   }
 
-  try {
-    const resendRes = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: fromEmail,
-        to: [toEmail],
-        reply_to: body.email,
-        subject: 'New newsletter subscriber',
-        html: `<p style="font-family:system-ui,sans-serif;font-size:14px;color:#111827;">New newsletter signup: <strong>${body.email}</strong></p>`,
-      }),
-    })
+  const internalHtml = renderBrandedEmail({
+    heading: 'New Newsletter Subscriber',
+    bodyHtml: `<p style="margin:0;font-size:14px;color:#161F1B;">A new visitor subscribed to regulatory updates:</p>
+      <p style="margin:8px 0 0;font-size:15px;font-weight:600;color:#158A76;">${body.email.replace(/&/g, '&amp;').replace(/</g, '&lt;')}</p>`,
+  })
 
-    if (!resendRes.ok) {
-      const detail = await resendRes.text()
-      console.error('Resend API error:', resendRes.status, detail)
-      return res.status(502).json({ error: 'Failed to subscribe. Please try again.' })
-    }
+  const welcomeHtml = renderBrandedEmail({
+    heading: "You're subscribed.",
+    bodyHtml: `<p style="margin:0 0 12px;font-size:14px;line-height:1.6;color:#161F1B;">Thanks for subscribing to Photocarb's regulatory updates. We'll only email you when it matters — new CBAM guidance, IFRS S2 developments, and Gulf carbon policy changes that affect your industry.</p>
+      <p style="margin:0;font-size:13.5px;color:#57685F;">No spam, ever. You can unsubscribe at any time.</p>`,
+    ctaLabel: 'Explore the platform',
+    ctaHref: siteUrl,
+  })
 
-    return res.status(200).json({ ok: true })
-  } catch (err) {
-    console.error('Newsletter signup failed:', err)
-    return res.status(500).json({ error: 'Failed to subscribe. Please try again.' })
+  const [internalOk] = await Promise.all([
+    sendResendEmail({
+      apiKey,
+      from: fromEmail,
+      to: [toEmail],
+      subject: 'New newsletter subscriber',
+      html: internalHtml,
+      replyTo: body.email,
+    }),
+    sendResendEmail({
+      apiKey,
+      from: fromEmail,
+      to: [body.email],
+      subject: "You're subscribed to Photocarb updates",
+      html: welcomeHtml,
+    }),
+  ])
+
+  if (!internalOk) {
+    return res.status(502).json({ error: 'Failed to subscribe. Please try again.' })
   }
+
+  return res.status(200).json({ ok: true })
 }
