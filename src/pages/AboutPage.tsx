@@ -3,6 +3,7 @@ import FinalCTA from '../components/FinalCTA'
 import { useInView } from '../hooks/useInView'
 import { useOdometer } from '../hooks/useOdometer'
 import { useHashScroll } from '../hooks/useHashScroll'
+import { useDocumentMeta } from '../hooks/useDocumentMeta'
 import { useState } from 'react'
 import { IconFactory, IconGlobe, IconChart } from '../components/icons'
 import { QatarFlag } from '../components/Flags'
@@ -133,6 +134,10 @@ const VISION_PILLARS = [
 
 export default function AboutPage() {
   useHashScroll()
+  useDocumentMeta(
+    'About Photocarb | Carbon Intelligence Built for Gulf Industry',
+    "Founded by industrial engineers and AI researchers, Photocarb is headquartered in Doha, Qatar, with an engineering and R&D center in Sousse, Tunisia — building the next generation of ClimateTech for the MENA region.",
+  )
 
   return (
     <>

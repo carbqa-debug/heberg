@@ -3,6 +3,7 @@ import RegulationExplorer from '../components/RegulationExplorer'
 import FinalCTA from '../components/FinalCTA'
 import { useInView } from '../hooks/useInView'
 import { useLang } from '../i18n/LanguageContext'
+import { useDocumentMeta } from '../hooks/useDocumentMeta'
 import { IconCheck, IconCircleDot } from '../components/icons'
 
 const FRAMEWORKS = [
@@ -141,6 +142,10 @@ function localizeFramework(fw: typeof FRAMEWORKS[0], lang: 'en' | 'ar') {
 
 export default function CompliancePage() {
   const { lang } = useLang()
+  useDocumentMeta(
+    'CBAM, IFRS S2 & Qatar NCAP Compliance | Photocarb',
+    "Explore carbon regulations by country — CBAM, carbon tax, ESG requirements, and reporting rules — and see how Photocarb keeps Gulf exporters audit-ready across every framework.",
+  )
   return (
     <>
       <ComplianceHero />

@@ -6,10 +6,16 @@ import FinalCTA from '../components/FinalCTA'
 import { useInView } from '../hooks/useInView'
 import { SERVICES, localizeService, type ServiceDef } from '../data/services'
 import { useLang } from '../i18n/LanguageContext'
+import { useDocumentMeta } from '../hooks/useDocumentMeta'
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function ServicesPage() {
+  useDocumentMeta(
+    'Carbon Management Services | Photocarb',
+    'Eight integrated capabilities — CO₂ hardware sensing, bilan carbone, ESG reporting, CBAM compliance, supply chain carbon, LCA, and AI-generated regulatory reports, delivered in 48 hours.',
+  )
+
   return (
     <>
       <ServicesHero />

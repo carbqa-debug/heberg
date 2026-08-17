@@ -4,6 +4,7 @@ import { useInView } from '../hooks/useInView'
 import { CASE_STUDIES, localizeCaseStudy } from '../data/caseStudies'
 import { IconFactory, IconFlask, IconBuilding, IconBolt } from '../components/icons'
 import { useLang } from '../i18n/LanguageContext'
+import { useDocumentMeta } from '../hooks/useDocumentMeta'
 
 const ICONS = [IconFactory, IconFlask, IconBuilding, IconBolt]
 
@@ -12,6 +13,11 @@ export default function CaseStudiesPage() {
   const { ref, visible } = useInView(0.1)
   const { t, lang } = useLang()
   const caseStudies = CASE_STUDIES.map(c => localizeCaseStudy(c, lang))
+
+  useDocumentMeta(
+    'Case Studies | Real Results from Gulf Industrial Operators | Photocarb',
+    'Proof from the field — see how Ras Laffan, Mesaieed, and other Gulf industrial sites cut emissions, passed CBAM audits, and turned carbon data into measurable savings with Photocarb.',
+  )
 
   return (
     <>

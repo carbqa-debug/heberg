@@ -12,6 +12,7 @@ import FinalCTA from '../components/FinalCTA'
 import CertMarquee from '../components/CertMarquee'
 import { IconCheckCircle, IconClock, IconBuilding } from '../components/icons'
 import { useLang } from '../i18n/LanguageContext'
+import { useDocumentMeta } from '../hooks/useDocumentMeta'
 
 export default function ServiceDetailPage() {
   const { slug } = useParams<{ slug: string }>()
@@ -21,6 +22,11 @@ export default function ServiceDetailPage() {
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [slug])
+
+  useDocumentMeta(
+    base ? `${localizeService(base, lang).title} | Photocarb` : 'Photocarb',
+    base ? localizeService(base, lang).description : undefined,
+  )
 
   if (!base) return <Navigate to="/services" replace />
 

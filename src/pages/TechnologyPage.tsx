@@ -3,6 +3,7 @@ import CertMarquee from '../components/CertMarquee'
 import FinalCTA from '../components/FinalCTA'
 import { useInView } from '../hooks/useInView'
 import { useLang } from '../i18n/LanguageContext'
+import { useDocumentMeta } from '../hooks/useDocumentMeta'
 import {
   IconBrain, IconForecast, IconSatellite, IconChart, IconScan,
   IconTelescope, IconFlask, IconCheck, IconCircleDot,
@@ -186,6 +187,11 @@ function localizeCaptureTab(t: typeof CAPTURE_TABS[0], lang: 'en' | 'ar') {
 }
 
 export default function TechnologyPage() {
+  useDocumentMeta(
+    'Our Technology | AI-Powered Emissions Sensing & Capture Optimization | Photocarb',
+    'Every AI model in Photocarb is trained on real process historian data, validated against physical measurements, and deployed with explainable outputs — from continuous emission monitoring to capture optimization.',
+  )
+
   return (
     <>
       <TechHero />

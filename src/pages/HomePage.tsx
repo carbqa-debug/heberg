@@ -11,9 +11,14 @@ import AchievementsMap from '../components/AchievementsMap'
 import Partners from '../components/Partners'
 import FinalCTA from '../components/FinalCTA'
 import { useHashScroll } from '../hooks/useHashScroll'
+import { useDocumentMeta } from '../hooks/useDocumentMeta'
 
 export default function HomePage() {
   useHashScroll()
+  useDocumentMeta(
+    'Photocarb | AI-Powered Carbon Intelligence Platform for Qatar & the Gulf',
+    "Photocarb unifies CO₂ hardware sensing, carbon accounting, ESG reporting, and CBAM compliance in one platform — built for Ras Laffan, Mesaieed, and the Gulf industrial corridor.",
+  )
 
   return (
     <>
