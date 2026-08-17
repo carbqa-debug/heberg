@@ -7,7 +7,8 @@ import ComplianceSection from '../components/ComplianceSection'
 import HowItWorks from '../components/HowItWorks'
 import SectorTabs from '../components/SectorTabs'
 import CaseStudies from '../components/CaseStudies'
-import Testimonial from '../components/Testimonial'
+import AchievementsMap from '../components/AchievementsMap'
+import Partners from '../components/Partners'
 import FinalCTA from '../components/FinalCTA'
 
 export default function HomePage() {
@@ -22,7 +23,8 @@ export default function HomePage() {
       <HowItWorks />
       <SectorTabs />
       <CaseStudies />
-      <Testimonial />
+      <AchievementsMap />
+      <Partners />
       <FinalCTA />
     </>
   )

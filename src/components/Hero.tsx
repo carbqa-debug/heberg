@@ -64,14 +64,16 @@ export default function Hero() {
                   {line}
                 </motion.div>
               ))}
-              <motion.div
-                initial={{ opacity: 0, y: 26 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 0.6, ease: EASE }}
-                className="text-[44px] lg:text-[58px] leading-[1.06] italic font-normal text-[var(--color-primary)]"
-              >
-                {t('hero.titleAccent')}
-              </motion.div>
+              {t('hero.titleAccent') && (
+                <motion.div
+                  initial={{ opacity: 0, y: 26 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3, duration: 0.6, ease: EASE }}
+                  className="text-[44px] lg:text-[58px] leading-[1.06] italic font-normal text-[var(--color-primary)]"
+                >
+                  {t('hero.titleAccent')}
+                </motion.div>
+              )}
             </h1>
 
             {/* Tagline pill */}

@@ -87,13 +87,13 @@ export const translations: Record<Lang, Record<string, string>> = {
     // Hero (home)
     'hero.eyebrow': 'Carbon Intelligence Platform',
     'hero.builtForQatar': 'Built for Qatar',
-    'hero.titleLine1': 'Industrial Emissions',
-    'hero.titleLine2': 'in Qatar Cost Billions.',
-    'hero.titleAccent': 'We Built the Fix.',
+    'hero.titleLine1': 'Industrial Emissions Cost',
+    'hero.titleLine2': 'Facilities Billions of Dollars.',
+    'hero.titleAccent': '',
     'hero.pill': 'Measure · Reduce · Comply',
     'hero.poweringYour': 'Powering your',
     'hero.description':
-      "Industrial emissions cost facilities billions of dollars, and we built the solution. We're redefining carbon emissions management through technology. We develop integrated solutions that combine software, hardware, and AI to empower industrial and commercial entities to measure and manage their emissions efficiently and reliably.",
+      "We're redefining carbon emissions management through technology. We develop integrated solutions that combine software, hardware, and AI to empower industrial and commercial entities to measure and manage their emissions efficiently and reliably.",
 
     // Footer
     'footer.tagline': 'AI-powered Carbon Intelligence for Gulf industrial operators. Headquartered in Doha, Qatar.',
@@ -500,13 +500,13 @@ export const translations: Record<Lang, Record<string, string>> = {
     // Hero (home)
     'hero.eyebrow': 'منصة الذكاء الكربوني',
     'hero.builtForQatar': 'مصمّمة لقطر',
-    'hero.titleLine1': 'الانبعاثات الصناعية',
-    'hero.titleLine2': 'تكلّف قطر المليارات.',
-    'hero.titleAccent': 'ونحن صنعنا الحل.',
+    'hero.titleLine1': 'الانبعاثات الصناعية تكلف المنشآت',
+    'hero.titleLine2': 'مليارات الدولارات.',
+    'hero.titleAccent': '',
     'hero.pill': 'قِس · قلّل · امتثل',
     'hero.poweringYour': 'نُشغّل',
     'hero.description':
-      'الانبعاثات الصناعية تكلف المنشآت مليارات الدولارات، ونحن صنعنا الحل. نعيد تعريف إدارة الانبعاثات الكربونية بالتكنولوجيا. نطور حلولاً متكاملة تجمع بين البرمجيات والأجهزة والذكاء الاصطناعي لتمكين الجهات والمنشآت الصناعية والتجارية من قياس الانبعاثات وإدارتها بكفاءة وموثوقية.',
+      'نعيد تعريف إدارة الانبعاثات الكربونية بالتكنولوجيا. نطور حلولاً متكاملة تجمع بين البرمجيات والأجهزة والذكاء الاصطناعي لتمكين الجهات والمنشآت الصناعية والتجارية من قياس الانبعاثات وإدارتها بكفاءة وموثوقية.',
 
     // Footer
     'footer.tagline': 'ذكاء كربوني مدعوم بالذكاء الاصطناعي لمشغّلي الصناعة في الخليج. المقر الرئيسي في الدوحة، قطر.',

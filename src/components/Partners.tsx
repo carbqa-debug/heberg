@@ -25,10 +25,8 @@ const CATEGORY_ICON: Record<Exclude<CategoryKey, 'all'>, typeof IconBuilding> = 
 const PARTNERS: { name: string; slug: string; ext: string; category: Exclude<CategoryKey, 'all'> }[] = [
   { name: 'QSTP', slug: 'qstp', ext: 'png', category: 'innovation' },
   { name: 'Qatar Foundation', slug: 'qatar-foundation', ext: 'png', category: 'institutions' },
-  { name: 'Qatar Financial Centre', slug: 'qatar-financial-centre', ext: 'png', category: 'institutions' },
   { name: 'Qatar Chamber', slug: 'qatar-chamber', ext: 'png', category: 'institutions' },
   { name: 'Ministry of Commerce and Industry', slug: 'moci', ext: 'png', category: 'institutions' },
-  { name: 'FGCCC', slug: 'fgccc', ext: 'jpg', category: 'institutions' },
   { name: 'IPTIC', slug: 'iptic', ext: 'png', category: 'innovation' },
   { name: 'RedStart', slug: 'redstart', ext: 'png', category: 'innovation' },
   { name: 'ISSTE', slug: 'isste', ext: 'png', category: 'academic' },
