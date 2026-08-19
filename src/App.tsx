@@ -1,16 +1,18 @@
+import { lazy, Suspense } from 'react'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import Nav from './components/Nav'
 import Footer from './components/Footer'
-import HomePage from './pages/HomePage'
-import ServicesPage from './pages/ServicesPage'
-import ServiceDetailPage from './pages/ServiceDetailPage'
-import AboutPage from './pages/AboutPage'
-import TechnologyPage from './pages/TechnologyPage'
-import CompliancePage from './pages/CompliancePage'
-import CaseStudiesPage from './pages/CaseStudiesPage'
-import ContactPage from './pages/ContactPage'
-import LegalPage from './pages/LegalPage'
+
+const HomePage = lazy(() => import('./pages/HomePage'))
+const ServicesPage = lazy(() => import('./pages/ServicesPage'))
+const ServiceDetailPage = lazy(() => import('./pages/ServiceDetailPage'))
+const AboutPage = lazy(() => import('./pages/AboutPage'))
+const TechnologyPage = lazy(() => import('./pages/TechnologyPage'))
+const CompliancePage = lazy(() => import('./pages/CompliancePage'))
+const CaseStudiesPage = lazy(() => import('./pages/CaseStudiesPage'))
+const ContactPage = lazy(() => import('./pages/ContactPage'))
+const LegalPage = lazy(() => import('./pages/LegalPage'))
 
 function PageTransition({ children }: { children: React.ReactNode }) {
   return (
@@ -25,20 +27,34 @@ function PageTransition({ children }: { children: React.ReactNode }) {
   )
 }
 
+/** Minimal, layout-neutral placeholder shown only for the brief moment a
+ * route chunk is downloading (near-instant on repeat visits / fast connections). */
+function PageFallback() {
+  return <div className="min-h-screen bg-[var(--color-bg)]" />
+}
+
+function LazyPage({ children }: { children: React.ReactNode }) {
+  return (
+    <PageTransition>
+      <Suspense fallback={<PageFallback />}>{children}</Suspense>
+    </PageTransition>
+  )
+}
+
 function AnimatedRoutes() {
   const location = useLocation()
   return (
     <AnimatePresence mode="wait" initial={false}>
       <Routes location={location} key={location.pathname}>
-        <Route path="/"             element={<PageTransition><HomePage /></PageTransition>} />
-        <Route path="/services"     element={<PageTransition><ServicesPage /></PageTransition>} />
-        <Route path="/services/:slug" element={<PageTransition><ServiceDetailPage /></PageTransition>} />
-        <Route path="/about"        element={<PageTransition><AboutPage /></PageTransition>} />
-        <Route path="/technology"   element={<PageTransition><TechnologyPage /></PageTransition>} />
-        <Route path="/compliance"   element={<PageTransition><CompliancePage /></PageTransition>} />
-        <Route path="/case-studies" element={<PageTransition><CaseStudiesPage /></PageTransition>} />
-        <Route path="/contact"      element={<PageTransition><ContactPage /></PageTransition>} />
-        <Route path="/legal/:slug"  element={<PageTransition><LegalPage /></PageTransition>} />
+        <Route path="/"             element={<LazyPage><HomePage /></LazyPage>} />
+        <Route path="/services"     element={<LazyPage><ServicesPage /></LazyPage>} />
+        <Route path="/services/:slug" element={<LazyPage><ServiceDetailPage /></LazyPage>} />
+        <Route path="/about"        element={<LazyPage><AboutPage /></LazyPage>} />
+        <Route path="/technology"   element={<LazyPage><TechnologyPage /></LazyPage>} />
+        <Route path="/compliance"   element={<LazyPage><CompliancePage /></LazyPage>} />
+        <Route path="/case-studies" element={<LazyPage><CaseStudiesPage /></LazyPage>} />
+        <Route path="/contact"      element={<LazyPage><ContactPage /></LazyPage>} />
+        <Route path="/legal/:slug"  element={<LazyPage><LegalPage /></LazyPage>} />
       </Routes>
     </AnimatePresence>
   )
