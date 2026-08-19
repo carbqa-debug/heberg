@@ -144,7 +144,7 @@ export default function CompliancePage() {
   const { lang } = useLang()
   useDocumentMeta(
     'CBAM, IFRS S2 & Qatar NCAP Compliance | Photocarb',
-    "Explore carbon regulations by country — CBAM, carbon tax, ESG requirements, and reporting rules — and see how Photocarb keeps Gulf exporters audit-ready across every framework.",
+    "Explore carbon regulations by country — CBAM, carbon tax, ESG requirements, and reporting rules — and see how Photocarb keeps exporters audit-ready across every framework, anywhere in the world.",
   )
   return (
     <>

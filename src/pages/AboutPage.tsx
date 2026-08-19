@@ -135,8 +135,8 @@ const VISION_PILLARS = [
 export default function AboutPage() {
   useHashScroll()
   useDocumentMeta(
-    'About Photocarb | Carbon Intelligence Built for Gulf Industry',
-    "Founded by industrial engineers and AI researchers, Photocarb is headquartered in Doha, Qatar, with an engineering and R&D center in Sousse, Tunisia — building the next generation of ClimateTech for the MENA region.",
+    'About Photocarb | Our Story, Mission & Leadership',
+    'Founded by industrial engineers and AI researchers, Photocarb is headquartered in Doha, Qatar, with an engineering and R&D center in Sousse, Tunisia — building the next generation of ClimateTech for industry everywhere.',
   )
 
   return (

@@ -47,7 +47,7 @@ const GENERAL_CONTACTS = [
 
 export default function ContactPage() {
   useDocumentMeta(
-    'Contact Photocarb | Book a Demo | Carbon Intelligence for Gulf Industry',
+    'Contact Photocarb | Book a Demo | AI Carbon Intelligence Platform',
     "Book a free 45-minute discovery session with Photocarb's Doha-based team. Get a preliminary CBAM exposure assessment and live platform walkthrough for your sector.",
   )
 

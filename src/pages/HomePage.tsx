@@ -16,8 +16,8 @@ import { useDocumentMeta } from '../hooks/useDocumentMeta'
 export default function HomePage() {
   useHashScroll()
   useDocumentMeta(
-    'Photocarb | AI-Powered Carbon Intelligence Platform for Qatar & the Gulf',
-    "Photocarb unifies CO₂ hardware sensing, carbon accounting, ESG reporting, and CBAM compliance in one platform — built for Ras Laffan, Mesaieed, and the Gulf industrial corridor.",
+    'Photocarb | AI-Powered Carbon Intelligence Platform',
+    'Photocarb unifies CO₂ hardware sensing, carbon accounting, ESG reporting, and CBAM compliance in one platform — built for industrial and commercial operators anywhere in the world.',
   )
 
   return (

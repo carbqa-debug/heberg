@@ -96,7 +96,7 @@ export const translations: Record<Lang, Record<string, string>> = {
       "We're redefining carbon emissions management through technology. We develop integrated solutions that combine software, hardware, and AI to empower industrial and commercial entities to measure and manage their emissions efficiently and reliably.",
 
     // Footer
-    'footer.tagline': 'AI-powered Carbon Intelligence for Gulf industrial operators. Headquartered in Doha, Qatar.',
+    'footer.tagline': 'AI-powered Carbon Intelligence for industrial operators everywhere. Headquartered in Doha, Qatar.',
     'footer.solutions': 'Solutions',
     'footer.company': 'Company',
     'footer.legal': 'Legal',
@@ -509,7 +509,7 @@ export const translations: Record<Lang, Record<string, string>> = {
       'نعيد تعريف إدارة الانبعاثات الكربونية بالتكنولوجيا. نطور حلولاً متكاملة تجمع بين البرمجيات والأجهزة والذكاء الاصطناعي لتمكين الجهات والمنشآت الصناعية والتجارية من قياس الانبعاثات وإدارتها بكفاءة وموثوقية.',
 
     // Footer
-    'footer.tagline': 'ذكاء كربوني مدعوم بالذكاء الاصطناعي لمشغّلي الصناعة في الخليج. المقر الرئيسي في الدوحة، قطر.',
+    'footer.tagline': 'ذكاء كربوني مدعوم بالذكاء الاصطناعي لمشغّلي الصناعة في كل مكان. المقر الرئيسي في الدوحة، قطر.',
     'footer.solutions': 'الحلول',
     'footer.company': 'الشركة',
     'footer.legal': 'الشؤون القانونية',

@@ -15,8 +15,8 @@ export default function CaseStudiesPage() {
   const caseStudies = CASE_STUDIES.map(c => localizeCaseStudy(c, lang))
 
   useDocumentMeta(
-    'Case Studies | Real Results from Gulf Industrial Operators | Photocarb',
-    'Proof from the field — see how Ras Laffan, Mesaieed, and other Gulf industrial sites cut emissions, passed CBAM audits, and turned carbon data into measurable savings with Photocarb.',
+    'Case Studies | Real Results from Industrial Operators | Photocarb',
+    'Proof from the field — see how industrial and commercial sites cut emissions, passed CBAM audits, and turned carbon data into measurable savings with Photocarb.',
   )
 
   return (

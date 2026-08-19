@@ -1,7 +1,12 @@
 {
-  "description": "An AI-powered Carbon Intelligence Platform designed for Gulf industrial operators, helping them measure, reduce, and comply with carbon emissions efficiently.",
+  "title": "Photocarb — AI-Powered Carbon Intelligence Platform",
+  "description": "An AI-powered Carbon Intelligence Platform for industrial and commercial operators everywhere, helping them measure, reduce, and comply with carbon emissions efficiently.",
+  "language": "en",
   "robots": {
     "index": true
+  },
+  "openGraph": {
+    "image": "https://www.photocarb.qa/images/logo.png"
   },
   "accessibility": {
     "addBypassLinks": false,
