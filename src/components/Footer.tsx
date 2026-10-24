@@ -43,6 +43,15 @@ const COLS = [
 
 const CONTACT = [
   {
+    Flag: TunisiaFlag,
+    cityKey: 'contact.sousse',
+    labelKey: 'footer.headquarters',
+    addressKey: 'footer.tunisiaAddress',
+    email: 'contact@photocarb.com',
+    phone: '+216 58 56 10 00',
+    color: 'var(--color-tunisia)',
+  },
+  {
     Flag: QatarFlag,
     cityKey: 'contact.doha',
     labelKey: 'footer.headquarters',
@@ -50,15 +59,6 @@ const CONTACT = [
     email: 'hello@photocarb.qa',
     phone: '+974 4000 0000',
     color: 'var(--color-qatar)',
-  },
-  {
-    Flag: TunisiaFlag,
-    cityKey: 'contact.sousse',
-    labelKey: 'footer.engineeringCentre',
-    addressKey: 'footer.tunisiaAddress',
-    email: 'contact@photocarb.com',
-    phone: '+216 58 56 10 00',
-    color: 'var(--color-tunisia)',
   },
 ]
 

@@ -136,7 +136,7 @@ export default function AboutPage() {
   useHashScroll()
   useDocumentMeta(
     'About Photocarb | Our Story, Mission & Leadership',
-    'Founded by industrial engineers and AI researchers, Photocarb is headquartered in Doha, Qatar, with an engineering and R&D center in Sousse, Tunisia — building the next generation of ClimateTech for industry everywhere.',
+    'Founded by industrial engineers and AI researchers, Photocarb is headquartered in Sousse, Tunisia and Doha, Qatar — building the next generation of ClimateTech for industry everywhere.',
   )
 
   return (
@@ -167,8 +167,11 @@ function AboutHero() {
             {t('about.heroTitle')}{' '}
             <em className="italic font-normal text-[var(--color-primary)]">{t('about.heroTitleAccent')}</em>
           </h1>
-          <p className="text-[18px] leading-relaxed text-[var(--color-text-secondary)] max-w-[600px]" style={{ fontFamily: 'var(--font-body)' }}>
+          <p className="text-[18px] leading-relaxed text-[var(--color-text-secondary)] max-w-[700px] mb-4" style={{ fontFamily: 'var(--font-body)' }}>
             {t('about.heroSubtitle')}
+          </p>
+          <p className="text-[18px] leading-relaxed text-[var(--color-text-secondary)] max-w-[700px]" style={{ fontFamily: 'var(--font-body)' }}>
+            {t('about.heroSubtitle2')}
           </p>
         </div>
       </div>

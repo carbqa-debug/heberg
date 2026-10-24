@@ -16,6 +16,8 @@ export const config = {
 
 const SITE_URL = 'https://www.photocarb.qa'
 const OG_IMAGE = `${SITE_URL}/images/logo.png`
+// Spellings people type when searching for the brand, Arabic included
+const BRAND_ALT_NAMES = ['فوتوكارب', 'فوتو كارب', 'PhotoCarb', 'Photo Carb']
 
 const BOT_UA = /facebookexternalhit|Facebot|Twitterbot|LinkedInBot|WhatsApp|TelegramBot|Slackbot|Discordbot|SkypeUriPreview|redditbot|Pinterest|vkShare|W3C_Validator|Googlebot|bingbot|DuckDuckBot|Applebot|Bytespider|Baiduspider|YandexBot/i
 
@@ -109,30 +111,125 @@ const STATIC_PAGES: Record<string, PageMeta> = {
   },
 }
 
-function resolveMeta(pathname: string): PageMeta {
-  if (STATIC_PAGES[pathname]) return STATIC_PAGES[pathname]
+// Arabic metadata, served for ?lang=ar so searches for "فوتوكارب" land on an Arabic page
+const SERVICES_AR: Record<string, PageMeta> = {
+  'co2-collectors': {
+    title: 'مجمّعات ثاني أكسيد الكربون | فوتوكارب Photocarb',
+    description: 'أجهزة تجميع ثاني أكسيد الكربون تُركَّب على البنية التحتية القائمة، معتمدة ATEX ودون توقف الإنتاج. بيانات انبعاثات حيّة من منشأتك خلال 48 ساعة.',
+  },
+  'bilan-carbone': {
+    title: 'الميزانية الكربونية (Bilan Carbone) | فوتوكارب Photocarb',
+    description: 'ميزانيتك الكربونية الكاملة للنطاقات 1 و2 و3، محسوبة من بيانات تشغيلية حقيقية ومتوافقة مع بروتوكول غازات الدفيئة.',
+  },
+  'esg-reports': {
+    title: 'تقارير ESG والاستدامة | فوتوكارب Photocarb',
+    description: 'تقارير ESG واستدامة جاهزة لمجالس الإدارة تُولَّد تلقائياً، متوافقة مع IFRS S2 وقابلة للتدقيق، تُسلَّم خلال 48 ساعة.',
+  },
+  cbam: {
+    title: 'الامتثال لآلية تعديل حدود الكربون CBAM | فوتوكارب Photocarb',
+    description: 'أتمتة كاملة لإقرارات CBAM للمصدّرين. تحسب فوتوكارب الكربون المضمَّن الفعلي وتُعدّ الإقرارات بصيغة الاتحاد الأوروبي تلقائياً.',
+  },
+  'supply-chain': {
+    title: 'كربون سلسلة الإمداد | فوتوكارب Photocarb',
+    description: 'ارسم البصمة الكربونية لسلسلة إمدادك عبر فئات النطاق 3 الخمس عشرة، مع جمع بيانات الموردين وتحديد أبرز مصادر الانبعاثات.',
+  },
+  'simulation-lab': {
+    title: 'مختبر المحاكاة | فوتوكارب Photocarb',
+    description: 'حاكِ تغييرات العمليات وتبديل الوقود وترقيات احتجاز الكربون قبل الاستثمار، مع نمذجة فورية للتكلفة والانبعاثات.',
+  },
+  lca: {
+    title: 'تقييم دورة الحياة LCA | فوتوكارب Photocarb',
+    description: 'تحليل معتمد للبصمة الكربونية للمنتج، من استخراج المواد الخام حتى بوابة المصنع أو طوال دورة الحياة الكاملة.',
+  },
+  'ai-reports': {
+    title: 'تقارير الذكاء الاصطناعي | فوتوكارب Photocarb',
+    description: 'تقارير تنظيمية مؤتمتة: إقرارات CBAM وإفصاحات IFRS S2 وجرد ISO 14064، تُولَّد وفق جدول أو عند الطلب.',
+  },
+}
+
+const LEGAL_AR: Record<string, PageMeta> = {
+  'privacy-policy': {
+    title: 'سياسة الخصوصية | فوتوكارب Photocarb',
+    description: 'كيف تجمع فوتوكارب البيانات الشخصية والتشغيلية وتستخدمها وتحميها.',
+  },
+  'terms-of-service': {
+    title: 'شروط الخدمة | فوتوكارب Photocarb',
+    description: 'الشروط التي تحكم استخدامك لموقع ومنصة فوتوكارب.',
+  },
+  'data-processing-agreement': {
+    title: 'اتفاقية معالجة البيانات | فوتوكارب Photocarb',
+    description: 'كيف تعالج فوتوكارب البيانات الشخصية نيابةً عن عملائها.',
+  },
+  'cookie-policy': {
+    title: 'سياسة ملفات تعريف الارتباط | فوتوكارب Photocarb',
+    description: 'كيف تستخدم فوتوكارب ملفات تعريف الارتباط والتقنيات المشابهة على موقعها.',
+  },
+}
+
+const STATIC_PAGES_AR: Record<string, PageMeta> = {
+  '/': {
+    title: 'فوتوكارب Photocarb | منصة الذكاء الكربوني المدعومة بالذكاء الاصطناعي',
+    description: 'فوتوكارب تجمع استشعار ثاني أكسيد الكربون بالأجهزة، والمحاسبة الكربونية، وتقارير ESG، والامتثال لآلية CBAM في منصة واحدة للمشغّلين الصناعيين والتجاريين. الدوحة، قطر وسوسة، تونس.',
+  },
+  '/services': {
+    title: 'خدمات إدارة الكربون | فوتوكارب Photocarb',
+    description: 'ثماني قدرات متكاملة: استشعار ثاني أكسيد الكربون، الميزانية الكربونية، تقارير ESG، الامتثال لـ CBAM، كربون سلسلة الإمداد، تقييم دورة الحياة، وتقارير تنظيمية بالذكاء الاصطناعي خلال 48 ساعة.',
+  },
+  '/about': {
+    title: 'عن فوتوكارب | قصتنا ورسالتنا وقيادتنا',
+    description: 'أسّسها مهندسون صناعيون وباحثون في الذكاء الاصطناعي. يقع مقر فوتوكارب في الدوحة، قطر، مع مركز للهندسة والبحث والتطوير في سوسة، تونس، لبناء الجيل القادم من تقنيات المناخ للصناعة.',
+  },
+  '/technology': {
+    title: 'تقنيتنا | استشعار الانبعاثات بالذكاء الاصطناعي | فوتوكارب Photocarb',
+    description: 'كل نموذج ذكاء اصطناعي في فوتوكارب مدرَّب على بيانات تشغيلية حقيقية، ومُتحقَّق منه مقابل قياسات فعلية، ويقدّم مخرجات قابلة للتفسير.',
+  },
+  '/compliance': {
+    title: 'الامتثال لـ CBAM و IFRS S2 | فوتوكارب Photocarb',
+    description: 'استكشف لوائح الكربون حسب الدولة: CBAM وضريبة الكربون ومتطلبات ESG وقواعد الإفصاح، واعرف كيف تُبقي فوتوكارب المصدّرين جاهزين للتدقيق.',
+  },
+  '/case-studies': {
+    title: 'دراسات الحالة | نتائج حقيقية | فوتوكارب Photocarb',
+    description: 'أدلة من الميدان: كيف خفّضت منشآت صناعية وتجارية انبعاثاتها واجتازت تدقيق CBAM وحوّلت بيانات الكربون إلى وفورات ملموسة مع فوتوكارب.',
+  },
+  '/contact': {
+    title: 'اتصل بفوتوكارب | احجز عرضاً توضيحياً',
+    description: 'احجز جلسة استكشافية مجانية مدتها 45 دقيقة مع فريق فوتوكارب، واحصل على تقييم أولي لتعرّضك لآلية CBAM وجولة حيّة على المنصة.',
+  },
+}
+
+type Lang = 'en' | 'ar'
+
+function resolveMeta(pathname: string, lang: Lang): PageMeta {
+  const pages = lang === 'ar' ? STATIC_PAGES_AR : STATIC_PAGES
+  const services = lang === 'ar' ? SERVICES_AR : SERVICES
+  const legal = lang === 'ar' ? LEGAL_AR : LEGAL
+
+  if (pages[pathname]) return pages[pathname]
 
   const serviceMatch = pathname.match(/^\/services\/([^/]+)\/?$/)
-  if (serviceMatch && SERVICES[serviceMatch[1]]) return SERVICES[serviceMatch[1]]
+  if (serviceMatch && services[serviceMatch[1]]) return services[serviceMatch[1]]
 
   const legalMatch = pathname.match(/^\/legal\/([^/]+)\/?$/)
-  if (legalMatch && LEGAL[legalMatch[1]]) return LEGAL[legalMatch[1]]
+  if (legalMatch && legal[legalMatch[1]]) return legal[legalMatch[1]]
 
-  return STATIC_PAGES['/']
+  return pages['/']
 }
 
 function escapeHtml(value: string): string {
   return value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 }
 
-function renderSnapshot(pathname: string): string {
-  const meta = resolveMeta(pathname)
-  const canonical = `${SITE_URL}${pathname}`
+function renderSnapshot(pathname: string, lang: Lang): string {
+  const meta = resolveMeta(pathname, lang)
+  const enUrl = `${SITE_URL}${pathname}`
+  const arUrl = `${enUrl}?lang=ar`
+  const canonical = lang === 'ar' ? arUrl : enUrl
   const title = escapeHtml(meta.title)
   const description = escapeHtml(meta.description)
+  const altNames = JSON.stringify(BRAND_ALT_NAMES)
 
   return `<!doctype html>
-<html lang="en">
+<html lang="${lang}" dir="${lang === 'ar' ? 'rtl' : 'ltr'}">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -140,8 +237,13 @@ function renderSnapshot(pathname: string): string {
 <title>${title}</title>
 <meta name="description" content="${description}" />
 <link rel="canonical" href="${canonical}" />
+<link rel="alternate" hreflang="en" href="${enUrl}" />
+<link rel="alternate" hreflang="ar" href="${arUrl}" />
+<link rel="alternate" hreflang="x-default" href="${enUrl}" />
 <meta property="og:type" content="website" />
-<meta property="og:site_name" content="Photocarb" />
+<meta property="og:site_name" content="${lang === 'ar' ? 'فوتوكارب Photocarb' : 'Photocarb'}" />
+<meta property="og:locale" content="${lang === 'ar' ? 'ar_QA' : 'en_US'}" />
+<meta property="og:locale:alternate" content="${lang === 'ar' ? 'en_US' : 'ar_QA'}" />
 <meta property="og:title" content="${title}" />
 <meta property="og:description" content="${description}" />
 <meta property="og:url" content="${canonical}" />
@@ -151,13 +253,17 @@ function renderSnapshot(pathname: string): string {
 <meta name="twitter:description" content="${description}" />
 <meta name="twitter:image" content="${OG_IMAGE}" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Organization","name":"Photocarb","legalName":"Photocarb Technologies LLC","url":"${SITE_URL}","logo":"${OG_IMAGE}"}
+{"@context":"https://schema.org","@type":"Organization","name":"Photocarb","alternateName":${altNames},"legalName":"Photocarb Technologies LLC","url":"${SITE_URL}","logo":"${OG_IMAGE}"}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"Photocarb","alternateName":${altNames},"url":"${SITE_URL}/","inLanguage":["en","ar"]}
 </script>
 </head>
 <body>
 <h1>${title}</h1>
 <p>${description}</p>
-<p><a href="${canonical}">Continue to Photocarb</a></p>
+<p>Photocarb · فوتوكارب</p>
+<p><a href="${canonical}">${lang === 'ar' ? 'الانتقال إلى موقع فوتوكارب' : 'Continue to Photocarb'}</a> · <a href="${lang === 'ar' ? enUrl : arUrl}">${lang === 'ar' ? 'English' : 'العربية'}</a></p>
 </body>
 </html>`
 }
@@ -166,8 +272,9 @@ export default function middleware(request: Request) {
   const ua = request.headers.get('user-agent') || ''
   if (!BOT_UA.test(ua)) return // real visitors: pass through untouched
 
-  const { pathname } = new URL(request.url)
-  return new Response(renderSnapshot(pathname), {
+  const { pathname, searchParams } = new URL(request.url)
+  const lang: Lang = searchParams.get('lang') === 'ar' ? 'ar' : 'en'
+  return new Response(renderSnapshot(pathname, lang), {
     headers: { 'content-type': 'text/html; charset=utf-8' },
   })
 }

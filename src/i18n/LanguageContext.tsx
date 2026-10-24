@@ -17,6 +17,9 @@ const Ctx = createContext<LanguageCtx | null>(null)
 const STORAGE_KEY = 'pc-lang'
 
 function readInitial(): Lang {
+  // ?lang=ar / ?lang=en wins, so the Arabic URLs in the sitemap open in Arabic
+  const param = new URLSearchParams(window.location.search).get('lang')
+  if (param === 'ar' || param === 'en') return param
   try {
     const saved = localStorage.getItem(STORAGE_KEY)
     if (saved === 'ar' || saved === 'en') return saved

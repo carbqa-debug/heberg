@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
+import { useLang } from '../i18n/LanguageContext'
 
 const SITE_URL = 'https://www.photocarb.qa'
 const DEFAULT_OG_IMAGE = `${SITE_URL}/images/logo.png`
@@ -20,17 +21,24 @@ function setMeta(selector: string, attr: string, attrValue: string, content: str
  * Card tags for the current page (client-side SPA meta — reverts on unmount). */
 export function useDocumentMeta(title: string, description?: string, ogImage?: string) {
   const location = useLocation()
+  const { lang } = useLang()
 
   useEffect(() => {
     const prevTitle = document.title
     document.title = title
 
-    const canonicalUrl = `${SITE_URL}${location.pathname}`
+    const enUrl = `${SITE_URL}${location.pathname}`
+    const arUrl = `${enUrl}?lang=ar`
+    const canonicalUrl = lang === 'ar' ? arUrl : enUrl
     const image = ogImage || DEFAULT_OG_IMAGE
 
     const entries: { el: HTMLMetaElement | HTMLLinkElement; prev: string | null }[] = []
     entries.push(setMeta('meta[name="description"]', 'name', 'description', description || ''))
     entries.push(setMeta('link[rel="canonical"]', 'rel', 'canonical', canonicalUrl))
+    entries.push(setMeta('link[hreflang="en"]', 'hreflang', 'en', enUrl))
+    entries.push(setMeta('link[hreflang="ar"]', 'hreflang', 'ar', arUrl))
+    entries.push(setMeta('link[hreflang="x-default"]', 'hreflang', 'x-default', enUrl))
+    for (const { el } of entries.slice(-3)) el.setAttribute('rel', 'alternate')
     entries.push(setMeta('meta[property="og:title"]', 'property', 'og:title', title))
     entries.push(setMeta('meta[property="og:description"]', 'property', 'og:description', description || ''))
     entries.push(setMeta('meta[property="og:url"]', 'property', 'og:url', canonicalUrl))
@@ -46,5 +54,5 @@ export function useDocumentMeta(title: string, description?: string, ogImage?: s
         if (prev !== null) el.setAttribute(el.tagName === 'LINK' ? 'href' : 'content', prev)
       }
     }
-  }, [title, description, ogImage, location.pathname])
+  }, [title, description, ogImage, location.pathname, lang])
 }

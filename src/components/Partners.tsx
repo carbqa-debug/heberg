@@ -1,48 +1,26 @@
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from '../hooks/useInView'
 import { useLang } from '../i18n/LanguageContext'
-import { IconNetwork, IconBuilding, IconBolt, IconTelescope } from './icons'
-
-type CategoryKey = 'all' | 'institutions' | 'innovation' | 'academic'
-
-const CATEGORY_COLOR: Record<Exclude<CategoryKey, 'all'>, string> = {
-  institutions: 'var(--color-navy)',
-  innovation: 'var(--color-primary)',
-  academic: 'var(--color-violet)',
-}
-
-const CATEGORY_ICON: Record<Exclude<CategoryKey, 'all'>, typeof IconBuilding> = {
-  institutions: IconBuilding,
-  innovation: IconBolt,
-  academic: IconTelescope,
-}
+import { IconNetwork } from './icons'
 
 /**
  * Drop a logo file at /public/images/partners/{slug}.{ext} and it renders
  * automatically — falls back to a monogram badge until the real file exists.
  */
-const PARTNERS: { name: string; slug: string; ext: string; category: Exclude<CategoryKey, 'all'> }[] = [
-  { name: 'QSTP', slug: 'qstp', ext: 'png', category: 'innovation' },
-  { name: 'Qatar Foundation', slug: 'qatar-foundation', ext: 'png', category: 'institutions' },
-  { name: 'Qatar Chamber', slug: 'qatar-chamber', ext: 'png', category: 'institutions' },
-  { name: 'Ministry of Commerce and Industry', slug: 'moci', ext: 'png', category: 'institutions' },
-  { name: 'IPTIC', slug: 'iptic', ext: 'png', category: 'innovation' },
-  { name: 'RedStart', slug: 'redstart', ext: 'png', category: 'innovation' },
-  { name: 'ISSTE', slug: 'isste', ext: 'png', category: 'academic' },
-  { name: 'University of Sousse', slug: 'university-of-sousse', ext: 'png', category: 'academic' },
-  { name: 'University della Calabria', slug: 'university-della-calabria', ext: 'png', category: 'academic' },
-  { name: 'PEESO', slug: 'peeso', ext: 'png', category: 'innovation' },
+const PARTNERS: { name: string; slug: string; ext: string }[] = [
+  { name: 'QSTP', slug: 'qstp', ext: 'png' },
+  { name: 'Qatar Chamber', slug: 'qatar-chamber', ext: 'png' },
+  { name: 'Ministry of Commerce and Industry', slug: 'moci', ext: 'png' },
+  { name: 'IPTIC', slug: 'iptic', ext: 'png' },
+  { name: 'RedStart', slug: 'redstart', ext: 'png' },
+  { name: 'ISSTE', slug: 'isste', ext: 'png' },
+  { name: 'University of Sousse', slug: 'university-of-sousse', ext: 'png' },
+  { name: 'University della Calabria', slug: 'university-della-calabria', ext: 'png' },
+  { name: 'PEESO', slug: 'peeso', ext: 'png' },
 ]
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 14, scale: 0.9 },
-  visible: (i: number) => ({
-    opacity: 1, y: 0, scale: 1,
-    transition: { delay: 0.03 * i, duration: 0.45, ease: [0.22, 1, 0.36, 1] as const },
-  }),
-  exit: { opacity: 0, scale: 0.9, transition: { duration: 0.18 } },
-}
+// Rendered twice so the marquee-scroll keyframe (translateX -50%) loops seamlessly
+const LOOP = [...PARTNERS, ...PARTNERS]
 
 function initials(name: string) {
   const words = name.split(' ').filter(w => w.length > 1 || /[A-Z]/.test(w))
@@ -50,75 +28,54 @@ function initials(name: string) {
   return (words[0][0] + words[1][0]).toUpperCase()
 }
 
-function PartnerCard({
-  name, slug, ext, category, index, visible,
-}: { name: string; slug: string; ext: string; category: Exclude<CategoryKey, 'all'>; index: number; visible: boolean }) {
+function PartnerCard({ name, slug, ext, hidden }: { name: string; slug: string; ext: string; hidden?: boolean }) {
   const [failed, setFailed] = useState(false)
   const [loaded, setLoaded] = useState(false)
-  const color = CATEGORY_COLOR[category]
 
   return (
-    <motion.div
-      layout
-      custom={index}
-      variants={cardVariants}
-      initial="hidden"
-      animate={visible ? 'visible' : 'hidden'}
-      exit="exit"
-      whileHover={{ y: -3, transition: { duration: 0.2, ease: 'easeOut' } }}
-      className="group relative flex items-center gap-3 rounded-full pl-2.5 pr-5 py-2.5 backdrop-blur-md transition-colors duration-300"
-      style={{
-        background: 'color-mix(in srgb, var(--color-surface) 65%, transparent)',
-        border: '1px solid color-mix(in srgb, var(--color-text-primary) 10%, transparent)',
-        boxShadow: '0 1px 2px color-mix(in srgb, var(--color-text-primary) 5%, transparent)',
-      }}
-      title={name}
-    >
-      {/* Hover glow ring in the category color */}
+    // Spacing lives on the wrapper (not a flex gap) so both halves of the loop are equal width
+    <div className="shrink-0 px-3" aria-hidden={hidden || undefined}>
       <div
-        className="pointer-events-none absolute -inset-px rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-        style={{ boxShadow: `0 0 0 1px ${color}, 0 6px 18px color-mix(in srgb, ${color} 28%, transparent)` }}
-      />
-
-      {/* Category dot */}
-      <span className="relative h-1.5 w-1.5 rounded-full shrink-0" style={{ background: color }} />
-
-      {/* Logo coin */}
-      <div
-        className="relative h-9 w-9 shrink-0 flex items-center justify-center rounded-full overflow-hidden"
-        style={{ background: 'var(--color-surface)', boxShadow: '0 1px 2px color-mix(in srgb, var(--color-text-primary) 10%, transparent)' }}
+        className="group flex flex-col items-center justify-center gap-4 w-[240px] h-[190px] sm:w-[280px] sm:h-[210px] rounded-3xl px-6 backdrop-blur-md transition-all duration-300 hover:-translate-y-1"
+        style={{
+          background: 'color-mix(in srgb, var(--color-surface) 75%, transparent)',
+          border: '1px solid color-mix(in srgb, var(--color-text-primary) 10%, transparent)',
+          boxShadow: '0 2px 10px color-mix(in srgb, var(--color-text-primary) 6%, transparent)',
+        }}
+        title={name}
       >
-        {!failed && (
-          <img
-            src={`/images/partners/${slug}.${ext}`}
-            alt={name}
-            className="max-h-6 max-w-6 object-contain"
-            style={{ display: loaded ? 'block' : 'none' }}
-            onLoad={() => setLoaded(true)}
-            onError={() => setFailed(true)}
-          />
-        )}
-        {(failed || !loaded) && (
-          <span
-            className="w-full h-full rounded-full flex items-center justify-center text-[10px] font-bold shrink-0"
-            style={{ background: `color-mix(in srgb, ${color} 16%, transparent)`, color, fontFamily: 'var(--font-body)', display: !failed && loaded ? 'none' : 'flex' }}
-          >
-            {initials(name)}
-          </span>
-        )}
-      </div>
+        <div className="h-[96px] w-full flex items-center justify-center">
+          {!failed && (
+            <img
+              src={`/images/partners/${slug}.${ext}`}
+              alt={hidden ? '' : name}
+              className="max-h-[96px] max-w-[200px] object-contain transition-transform duration-300 group-hover:scale-105"
+              style={{ display: loaded ? 'block' : 'none' }}
+              onLoad={() => setLoaded(true)}
+              onError={() => setFailed(true)}
+            />
+          )}
+          {(failed || !loaded) && (
+            <span
+              className="h-20 w-20 rounded-full flex items-center justify-center text-[22px] font-bold"
+              style={{ background: 'color-mix(in srgb, var(--color-primary) 14%, transparent)', color: 'var(--color-primary)', fontFamily: 'var(--font-body)' }}
+            >
+              {initials(name)}
+            </span>
+          )}
+        </div>
 
-      <span className="relative text-[13px] font-semibold text-[var(--color-text-primary)] whitespace-nowrap" style={{ fontFamily: 'var(--font-body)' }}>
-        {name}
-      </span>
-    </motion.div>
+        <span className="text-[14px] font-semibold text-center leading-snug text-[var(--color-text-primary)]" style={{ fontFamily: 'var(--font-body)' }}>
+          {name}
+        </span>
+      </div>
+    </div>
   )
 }
 
 export default function Partners() {
   const { ref, visible } = useInView(0.1)
   const { lang } = useLang()
-  const [filter, setFilter] = useState<CategoryKey>('all')
 
   const L = lang === 'ar'
     ? {
@@ -126,19 +83,13 @@ export default function Partners() {
         title: 'جزء من ',
         titleAccent: 'منظومة أوسع.',
         subtitle: 'من حاضنات الابتكار القطرية إلى الجامعات وغرف التجارة الإقليمية التي رافقت مسيرة فوتوكارب.',
-        categories: { all: 'الكل', institutions: 'مؤسسات', innovation: 'الابتكار والاحتضان', academic: 'أكاديمي وبحثي' },
       }
     : {
         eyebrow: 'Our Ecosystem',
         title: 'Part of a ',
         titleAccent: 'Wider Network.',
         subtitle: "From Qatari innovation bodies to regional universities and chambers of commerce that have supported Photocarb's journey.",
-        categories: { all: 'All', institutions: 'Institutions', innovation: 'Innovation & Incubation', academic: 'Academic & Research' },
       }
-
-  const filtered = filter === 'all' ? PARTNERS : PARTNERS.filter(p => p.category === filter)
-
-  const filterKeys: CategoryKey[] = ['all', 'institutions', 'innovation', 'academic']
 
   return (
     <section id="our-ecosystem" ref={ref as React.RefObject<HTMLElement>} className="relative overflow-hidden bg-[var(--color-bg)] py-24 scroll-mt-20">
@@ -150,7 +101,7 @@ export default function Partners() {
       </div>
 
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12 relative">
-        <div className={`text-center mb-10 fade-up ${visible ? 'visible' : ''}`}>
+        <div className={`text-center mb-12 fade-up ${visible ? 'visible' : ''}`}>
           <span
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border mb-5"
             style={{ borderColor: 'color-mix(in srgb, var(--color-navy) 25%, transparent)', background: 'color-mix(in srgb, var(--color-navy) 6%, transparent)' }}
@@ -169,50 +120,26 @@ export default function Partners() {
               {L.titleAccent}
             </span>
           </h2>
-          <p className="text-[14.5px] text-[var(--color-text-secondary)] max-w-[600px] mx-auto mb-8" style={{ fontFamily: 'var(--font-body)' }}>
+          <p className="text-[14.5px] text-[var(--color-text-secondary)] max-w-[600px] mx-auto" style={{ fontFamily: 'var(--font-body)' }}>
             {L.subtitle}
           </p>
-
-          {/* Category filter pills */}
-          <div className="flex flex-wrap items-center justify-center gap-2.5">
-            {filterKeys.map((key) => {
-              const active = filter === key
-              const color = key === 'all' ? 'var(--color-primary)' : CATEGORY_COLOR[key]
-              const Icon = key === 'all' ? null : CATEGORY_ICON[key]
-              const count = key === 'all' ? PARTNERS.length : PARTNERS.filter(p => p.category === key).length
-              return (
-                <button
-                  key={key}
-                  onClick={() => setFilter(key)}
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border text-[12.5px] font-semibold transition-all duration-250"
-                  style={{
-                    fontFamily: 'var(--font-body)',
-                    borderColor: active ? color : 'color-mix(in srgb, var(--color-text-primary) 12%, transparent)',
-                    background: active ? `color-mix(in srgb, ${color} 12%, transparent)` : 'var(--color-surface)',
-                    color: active ? color : 'var(--color-text-secondary)',
-                  }}
-                >
-                  {Icon && <Icon size={13} strokeWidth={2} style={{ color: active ? color : 'currentColor' }} />}
-                  {L.categories[key]}
-                  <span
-                    className="ml-0.5 min-w-[18px] px-1 rounded-full text-[10px] leading-[18px] font-bold"
-                    style={{ background: active ? color : 'color-mix(in srgb, var(--color-text-primary) 8%, transparent)', color: active ? 'var(--color-surface)' : 'var(--color-text-secondary)' }}
-                  >
-                    {count}
-                  </span>
-                </button>
-              )
-            })}
-          </div>
         </div>
+      </div>
 
-        <motion.div layout className="flex flex-wrap items-center justify-center gap-3 max-w-[1100px] mx-auto">
-          <AnimatePresence mode="popLayout">
-            {filtered.map((p, i) => (
-              <PartnerCard key={p.slug} name={p.name} slug={p.slug} ext={p.ext} category={p.category} index={i} visible={visible} />
-            ))}
-          </AnimatePresence>
-        </motion.div>
+      {/* Full-bleed horizontal marquee; edges fade out. Forced LTR so the loop math holds in Arabic too */}
+      <div
+        dir="ltr"
+        className={`relative overflow-hidden fade-up ${visible ? 'visible' : ''}`}
+        style={{
+          maskImage: 'linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent)',
+          WebkitMaskImage: 'linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent)',
+        }}
+      >
+        <div className="flex w-max marquee-track py-2" style={{ animationDuration: '45s' }}>
+          {LOOP.map((p, i) => (
+            <PartnerCard key={i} name={p.name} slug={p.slug} ext={p.ext} hidden={i >= PARTNERS.length} />
+          ))}
+        </div>
       </div>
     </section>
   )

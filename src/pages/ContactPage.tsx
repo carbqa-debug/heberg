@@ -13,6 +13,18 @@ const EXPECT_RANGES = ['1–10', '10–25', '25–40', '40–45']
 
 const OFFICES = [
   {
+    Flag: TunisiaFlag,
+    countryKey: 'contact.tunisia',
+    labelKey: 'contact.headquarters',
+    cityKey: 'contact.sousse',
+    addressKey: 'contact.tunisiaAddress',
+    phone: '+216 58 56 10 00',
+    email: 'contact@photocarb.com',
+    hoursKey: 'contact.tunisiaHours',
+    color: 'var(--color-tunisia)',
+    tint: 'var(--color-tunisia-tint)',
+  },
+  {
     Flag: QatarFlag,
     countryKey: 'contact.qatar',
     labelKey: 'contact.headquarters',
@@ -23,18 +35,6 @@ const OFFICES = [
     hoursKey: 'contact.qatarHours',
     color: 'var(--color-qatar)',
     tint: 'var(--color-qatar-tint)',
-  },
-  {
-    Flag: TunisiaFlag,
-    countryKey: 'contact.tunisia',
-    labelKey: 'contact.engineeringCentre',
-    cityKey: 'contact.sousse',
-    addressKey: 'contact.tunisiaAddress',
-    phone: '+216 58 56 10 00',
-    email: 'contact@photocarb.com',
-    hoursKey: 'contact.tunisiaHours',
-    color: 'var(--color-tunisia)',
-    tint: 'var(--color-tunisia-tint)',
   },
 ]
 
@@ -48,7 +48,7 @@ const GENERAL_CONTACTS = [
 export default function ContactPage() {
   useDocumentMeta(
     'Contact Photocarb | Book a Demo | AI Carbon Intelligence Platform',
-    "Book a free 45-minute discovery session with Photocarb's Doha-based team. Get a preliminary CBAM exposure assessment and live platform walkthrough for your sector.",
+    "Book a free 45-minute discovery session with Photocarb's Sousse and Doha-based team. Get a preliminary CBAM exposure assessment and live platform walkthrough for your sector.",
   )
 
   return (
